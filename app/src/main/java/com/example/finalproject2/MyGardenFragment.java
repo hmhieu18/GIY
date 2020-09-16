@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,20 +88,16 @@ public class MyGardenFragment extends Fragment {
         initComponent(view);
         return view;
     }
-
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
     private GridView.OnItemClickListener _gridViewItemOnClick = new GridView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-//
-//            Landmark lndmk = _landmarks.get(position);
-//            intent.putExtra("name", lndmk.getName());
-//            intent.putExtra("description", lndmk.getDescription());
-//            intent.putExtra("logoid", lndmk.getLogoID());
-//            intent.putExtra("lat", lndmk.getLatlong().latitude);
-//            intent.putExtra("long", lndmk.getLatlong().longitude);
-//
-//            startActivity(intent);
+            openFragment(PlantDetailsFragment.newInstance(_plants.get(position)));
         }
     };
 }
