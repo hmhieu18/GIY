@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_garden"
+        android:icon="@drawable/ic_garden"
+        android:title="@string/garden" />
+    <item
+        android:id="@+id/navigation_add_plant"
+        android:icon="@drawable/ic_add"
+        android:title="New plant" />
+    <item
+        android:id="@+id/navigation_calendar"
+        android:icon="@drawable/ic_calendar"
+        android:title="Calendar" />
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Setting" />
+</menu>
