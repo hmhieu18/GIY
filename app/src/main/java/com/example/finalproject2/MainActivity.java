@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //json: AppPlants.json
+        //loadPlants();
+        //json: UserPlants.json
+        //loadPlantsUser();
         setContentView(R.layout.activity_main);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
