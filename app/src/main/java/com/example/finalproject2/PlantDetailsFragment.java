@@ -30,6 +30,11 @@ public class PlantDetailsFragment extends Fragment {
     private TextView _bloomTime;
     private TextView _tMin;
     private TextView _tMax;
+    private ImageView _waterIcon;
+    private ImageView _lightIcon1;
+    private ImageView _lightIcon2;
+    private ImageView _lightIcon3;
+
 
     public PlantDetailsFragment() {
         // Required empty public constructor
@@ -62,7 +67,7 @@ public class PlantDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             plant = new Plant(getArguments().getString("Name"), getArguments().getString("ScientificName"), getArguments().getString("Water"),
-                    getArguments().getString("Light"), getArguments().getString("BloomTime"),getArguments().getString("TMin"),getArguments().getString("TMax"));
+                    getArguments().getString("Light"), getArguments().getString("BloomTime"), getArguments().getString("TMin"), getArguments().getString("TMax"));
         }
     }
 
@@ -76,6 +81,40 @@ public class PlantDetailsFragment extends Fragment {
         _tMax.setText(plant.getT_max());
         Bitmap bmp = BitmapFactory.decodeResource(Objects.requireNonNull(getContext()).getResources(), plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         _plantImg.setImageBitmap(bmp);
+        showWaterIcon();
+        showLightIcon();
+    }
+
+    private void showLightIcon() {
+        if (_light.getText().equals("Full Sun, Partial Shade")) {
+            _lightIcon1.setImageResource(R.drawable.full_sun);
+            _lightIcon2.setImageResource(R.drawable.partial_cloudy);
+        } else if (_light.getText().equals("Part Shade to Full Shade")) {
+            _lightIcon1.setImageResource(R.drawable.partial_cloudy);
+            _lightIcon2.setImageResource(R.drawable.full_cloudy);
+        } else if (_light.getText().equals("Full Sun")) {
+            _lightIcon1.setImageResource(R.drawable.full_sun);
+        } else if (_light.getText().equals("Partial Shade, Full Shade")) {
+            _lightIcon1.setImageResource(R.drawable.partial_cloudy);
+            _lightIcon2.setImageResource(R.drawable.full_cloudy);
+        } else if (_light.getText().equals("Part Shade to Full Shade")) {
+            _lightIcon1.setImageResource(R.drawable.partial_cloudy);
+            _lightIcon2.setImageResource(R.drawable.full_cloudy);
+        } else if (_light.getText().equals("Partial Shade, Shade")) {
+            _lightIcon1.setImageResource(R.drawable.partial_cloudy);
+            _lightIcon2.setImageResource(R.drawable.full_cloudy);
+        }
+    }
+
+    private void showWaterIcon() {
+        if (_water.getText().equals("Low")) {
+            _waterIcon.setImageResource(R.drawable.water_icon_low);
+        } else if (_water.getText().equals("Medium")) {
+            _waterIcon.setImageResource(R.drawable.water_icon_medium);
+        } else {
+            _waterIcon.setImageResource(R.drawable.water_icon_high);
+        }
+
     }
 
     @Override
@@ -96,6 +135,11 @@ public class PlantDetailsFragment extends Fragment {
         _bloomTime = view.findViewById(R.id.bloomtimetextview);
         _tMin = view.findViewById(R.id.tmintextview);
         _tMax = view.findViewById(R.id.tmaxtextview);
-        _plantImg=view.findViewById(R.id.plantphoto);
+        _plantImg = view.findViewById(R.id.plantphoto);
+        _waterIcon = view.findViewById(R.id.waterIcon);
+        _lightIcon1 = view.findViewById(R.id.lightIcon1);
+        _lightIcon2 = view.findViewById(R.id.lightIcon2);
+        _lightIcon3 = view.findViewById(R.id.lightIcon3);
+
     }
 }
