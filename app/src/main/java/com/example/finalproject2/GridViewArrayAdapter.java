@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,11 +52,13 @@ public class GridViewArrayAdapter extends ArrayAdapter<Plant> {
         TextView textView = convertView.findViewById(R.id.txt_name);
 
         Plant plant = _plants.get(position);
-        Bitmap bmp = BitmapFactory.decodeResource(_context.getResources(), plant.getLogoID());
+        Bitmap bmp = BitmapFactory.decodeResource(_context.getResources(),
+                plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         imageView.setImageBitmap(circleFit(bmp));
         textView.setText(plant.getName());
         return convertView;
     }
+
     public Bitmap circleFit(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
@@ -69,7 +72,7 @@ public class GridViewArrayAdapter extends ArrayAdapter<Plant> {
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
         // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-        canvas.drawCircle((float) (bitmap.getWidth() /2), (float) (bitmap.getHeight() / 2),
+        canvas.drawCircle((float) (bitmap.getWidth() / 2), (float) (bitmap.getHeight() / 2),
                 (float) (bitmap.getWidth() / 2.5), paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
@@ -77,4 +80,5 @@ public class GridViewArrayAdapter extends ArrayAdapter<Plant> {
         //return _bmp;
         return output;
     }
+
 }

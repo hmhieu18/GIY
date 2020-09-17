@@ -1,0 +1,202 @@
+[
+ {
+   "no": 1,
+   "name": "Aloe Vera",
+   "scientific_name": "Aloe",
+   "water": "Medium",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring to Summer",
+   "t_min": 12,
+   "t_max": 39
+ },
+ {
+   "no": 2,
+   "name": "Spider Plant",
+   "scientific_name": "Chlorophytum Comosum",
+   "water": "Medium",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Summer to Fall",
+   "t_min": 12,
+   "t_max": 20
+ },
+ {
+   "no": 3,
+   "name": "Peace Lily",
+   "scientific_name": "Spathiphyllum Wallisii",
+   "water": "Medium",
+   "light": "Part Shade to Full Shade",
+   "bloom_time": "N/A",
+   "t_min": 23,
+   "t_max": 29
+ },
+ {
+   "no": 4,
+   "name": "Jade Plant",
+   "scientific_name": "Crassula Ovata",
+   "water": "Low",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "N/A",
+   "t_min": 12,
+   "t_max": 20
+ },
+ {
+   "no": 5,
+   "name": "African Violet",
+   "scientific_name": "Saintpaulia",
+   "water": "Low",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring to Summer",
+   "t_min": 28,
+   "t_max": 30
+ },
+ {
+   "no": 6,
+   "name": "Weeping Fig",
+   "scientific_name": "Ficus Benjamina",
+   "water": "Low",
+   "light": "Full Sun",
+   "bloom_time": "Spring",
+   "t_min": 23,
+   "t_max": 29
+ },
+ {
+   "no": 7,
+   "name": "Ficus Benjamina",
+   "scientific_name": "Baby Rubber Plant",
+   "water": "Medium",
+   "light": "Full Sun",
+   "bloom_time": "Spring",
+   "t_min": 28,
+   "t_max": 30
+ },
+ {
+   "no": 8,
+   "name": "Dahlias",
+   "scientific_name": "",
+   "water": "Medium",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Winter to Spring",
+   "t_min": 12,
+   "t_max": 20
+ },
+ {
+   "no": 9,
+   "name": "Peonies",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Partial Shade, Full Shade",
+   "bloom_time": "N/A",
+   "t_min": 12,
+   "t_max": 39
+ },
+ {
+   "no": 10,
+   "name": "Tulips",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Full Sun",
+   "bloom_time": "Spring",
+   "t_min": 28,
+   "t_max": 30
+ },
+ {
+   "no": 11,
+   "name": "Sunflowers",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring",
+   "t_min": 23,
+   "t_max": 29
+ },
+ {
+   "no": 12,
+   "name": "Roses",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Part Shade to Full Shade",
+   "bloom_time": "N/A",
+   "t_min": 17,
+   "t_max": 30
+ },
+ {
+   "no": 13,
+   "name": "Orchids",
+   "scientific_name": "",
+   "water": "Medium",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring, Summer",
+   "t_min": 12,
+   "t_max": 39
+ },
+ {
+   "no": 14,
+   "name": "Lilies",
+   "scientific_name": "",
+   "water": "Medium",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring",
+   "t_min": 17,
+   "t_max": 30
+ },
+ {
+   "no": 15,
+   "name": "Gerbera Daisies",
+   "scientific_name": "",
+   "water": "Medium",
+   "light": "Full Sun, Partial Shade, Shade",
+   "bloom_time": "N/A",
+   "t_min": 12,
+   "t_max": 20
+ },
+ {
+   "no": 16,
+   "name": "Gardenias",
+   "scientific_name": "",
+   "water": "Medium",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring to Summer",
+   "t_min": 28,
+   "t_max": 30
+ },
+ {
+   "no": 17,
+   "name": "Daisies",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring",
+   "t_min": 23,
+   "t_max": 29
+ },
+ {
+   "no": 18,
+   "name": "Carnations",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Partial Shade, Shade",
+   "bloom_time": "Summer to Fall",
+   "t_min": 28,
+   "t_max": 30
+ },
+ {
+   "no": 19,
+   "name": "Calla Lilies",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring",
+   "t_min": 12,
+   "t_max": 39
+ },
+ {
+   "no": 20,
+   "name": "Alstroemerias",
+   "scientific_name": "",
+   "water": "Low",
+   "light": "Full Sun, Partial Shade",
+   "bloom_time": "Spring, Summer",
+   "t_min": 17,
+   "t_max": 30
+ }
+]

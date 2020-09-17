@@ -12,6 +12,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -23,7 +35,7 @@ import java.util.Objects;
 public class MyGardenFragment extends Fragment {
     private GridView _gridView;
     private GridViewArrayAdapter _adapter;
-    private ArrayList<Plant> _plants;
+    public static ArrayList<Plant> _plants;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,7 +75,7 @@ public class MyGardenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        loadData();
+        loadPlants();
     }
 
     private void initComponent(View view) {
@@ -72,14 +84,20 @@ public class MyGardenFragment extends Fragment {
         _gridView.setAdapter(_adapter);
         _gridView.setOnItemClickListener(_gridViewItemOnClick);
     }
-
-    private void loadData() {
-        _plants = new ArrayList<>();
-        Plant plant = new Plant("Cactus",
-                "Round Cactus",
-                R.drawable.roundcactus);
-        _plants.add(plant);
+    private void loadPlants(){
+        Gson gson = new Gson();
+        String _json = loadJSONFromAsset();
+        Type listType = new TypeToken<ArrayList<Plant>>() {
+        }.getType();
+        _plants= gson.fromJson(_json, listType);
     }
+//    private void loadData() {
+//        _plants = new ArrayList<>();
+//        Plant plant = new Plant("Cactus",
+//                "Round Cactus",
+//                R.drawable.roundcactus);
+//        _plants.add(plant);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,4 +118,27 @@ public class MyGardenFragment extends Fragment {
             openFragment(PlantDetailsFragment.newInstance(_plants.get(position)));
         }
     };
+    public String loadJSONFromAsset() {
+        InputStream is = getResources().openRawResource(R.raw.list);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return writer.toString();
+    }
 }

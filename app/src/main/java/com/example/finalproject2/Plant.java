@@ -1,26 +1,102 @@
 package com.example.finalproject2;
 
-public class Plant {
-    private String _name;
-    private String _description;
-    private int _plantImage;
+import java.lang.reflect.Field;
+import java.util.Calendar;
 
-    public Plant(String name, String description, int logoID) {
-        this._name = name;
-        this._description = description;
-        this._plantImage = logoID;
+public class Plant {
+    private String name;
+    private String scientific_name;
+    private String water;
+    private String light;
+    private String bloom_time;
+    private String t_min;
+    private String t_max;
+    private Calendar calendar;
+//    private int _plantImage;
+
+    public Plant(String _name, String _scientificName, String _water, String _light, String _bloomTime, String _tMin, String _tMax) {
+        this.name = _name;
+        this.scientific_name = _scientificName;
+        this.water = _water;
+        this.light = _light;
+        this.bloom_time = _bloomTime;
+        this.t_min = _tMin;
+        this.t_max = _tMax;
+//        this._plantImage = _plantImage;
     }
 
     public String getName() {
-        return _name;
+        return name;
     }
+
     public void setName(String name) {
-        this._name = name;
+        this.name = name;
     }
-    public String getDescription() {
-        return _description;
+
+    public String getScientific_name() {
+        return scientific_name;
     }
-    public int getLogoID() {
-        return _plantImage;
+
+    public void setScientific_name(String scientific_name) {
+        this.scientific_name = scientific_name;
     }
+
+    public String getWater() {
+        return water;
+    }
+
+    public void setWater(String water) {
+        this.water = water;
+    }
+
+    public String getLight() {
+        return light;
+    }
+
+    public void setLight(String light) {
+        this.light = light;
+    }
+
+    public String getBloom_time() {
+        return bloom_time;
+    }
+
+    public void setBloom_time(String bloom_time) {
+        this.bloom_time = bloom_time;
+    }
+
+    public String getT_min() {
+        return t_min;
+    }
+
+    public void setT_min(String t_min) {
+        this.t_min = t_min;
+    }
+
+    public String getT_max() {
+        return t_max;
+    }
+
+    public void setT_max(String t_max) {
+        this.t_max = t_max;
+    }
+
+    //
+//    public int get_plantImage() {
+//        return _plantImage;
+//    }
+//
+//    public void set_plantImage(int _plantImage) {
+//        this._plantImage = _plantImage;
+//    }
+    public int getId(String resourceName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resourceName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            throw new RuntimeException("No resource ID found for: "
+                    + resourceName + " / " + c, e);
+        }
+    }
+
 }

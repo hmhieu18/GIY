@@ -24,9 +24,12 @@ public class PlantDetailsFragment extends Fragment {
     private ImageView _plantImg;
     private Plant plant;
     private TextView _name;
-    private TextView _nickname;
-    private TextView _tempe;
-    private TextView _lightCondition;
+    private TextView _scientificName;
+    private TextView _water;
+    private TextView _light;
+    private TextView _bloomTime;
+    private TextView _tMin;
+    private TextView _tMax;
 
     public PlantDetailsFragment() {
         // Required empty public constructor
@@ -43,8 +46,13 @@ public class PlantDetailsFragment extends Fragment {
         PlantDetailsFragment fragment = new PlantDetailsFragment();
         Bundle args = new Bundle();
         args.putString("Name", plant.getName());
-        args.putString("Description", plant.getName());
-        args.putInt("LogoID", plant.getLogoID());
+        args.putString("ScientificName", plant.getScientific_name());
+        args.putString("Water", plant.getWater());
+        args.putString("Light", plant.getLight());
+        args.putString("BloomTime", plant.getBloom_time());
+        args.putString("TMin", plant.getT_min());
+        args.putString("TMax", plant.getT_max());
+        args.putInt("LogoID", plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,14 +61,20 @@ public class PlantDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            plant = new Plant(getArguments().getString("Name"), getArguments().getString("Description"), getArguments().getInt("LogoID"));
+            plant = new Plant(getArguments().getString("Name"), getArguments().getString("ScientificName"), getArguments().getString("Water"),
+                    getArguments().getString("Light"), getArguments().getString("BloomTime"),getArguments().getString("TMin"),getArguments().getString("TMax"));
         }
     }
 
     private void showInfo() {
         _name.setText(plant.getName());
-        _nickname.setText(plant.getDescription());
-        Bitmap bmp = BitmapFactory.decodeResource(Objects.requireNonNull(getContext()).getResources(), plant.getLogoID());
+        _scientificName.setText(plant.getScientific_name());
+        _water.setText(plant.getWater());
+        _light.setText(plant.getLight());
+        _bloomTime.setText(plant.getBloom_time());
+        _tMin.setText(plant.getT_min());
+        _tMax.setText(plant.getT_max());
+        Bitmap bmp = BitmapFactory.decodeResource(Objects.requireNonNull(getContext()).getResources(), plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         _plantImg.setImageBitmap(bmp);
     }
 
@@ -76,9 +90,12 @@ public class PlantDetailsFragment extends Fragment {
 
     private void initComponent(View view) {
         _name = view.findViewById(R.id.nametxtview);
-        _lightCondition = view.findViewById(R.id.lighttextview);
-        _nickname = view.findViewById(R.id.nicknametxtview);
-        _tempe = view.findViewById(R.id.tempetextview);
+        _scientificName = view.findViewById(R.id.scientificnametxtview);
+        _water = view.findViewById(R.id.watertextview);
+        _light = view.findViewById(R.id.lighttextview);
+        _bloomTime = view.findViewById(R.id.bloomtimetextview);
+        _tMin = view.findViewById(R.id.tmintextview);
+        _tMax = view.findViewById(R.id.tmaxtextview);
         _plantImg=view.findViewById(R.id.plantphoto);
     }
 }
