@@ -8,26 +8,32 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.text.style.SuggestionSpan;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -49,6 +55,9 @@ public class PredictionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ListView _predictionListView;
+    public static PredictionArrayAdapter _predictionArrayAdapter;
+    private ArrayList<PredictingResult.Suggestion> suggestionsArrayList;
 
     public PredictionFragment() {
         // Required empty public constructor
@@ -113,18 +122,18 @@ public class PredictionFragment extends Fragment {
     }
 
     private void initComponent(View view) {
-//        _conceptArrayList = new ArrayList<>();
-//        _predictionListView = findViewById(R.id.predictionresults);
-//        _predictionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        suggestionsArrayList = new ArrayList<>();
+        _predictionListView = view.findViewById(R.id.predictionresults);
+        _predictionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Intent myIntent = new Intent(PredictionFragment.this, searchResult.class);
-//                myIntent.putExtra("query", String.valueOf(_conceptArrayList.get(position).getName()));
+//                myIntent.putExtra("query", String.valueOf(suggestionsArrayList.get(position).getName()));
 //                PredictionFragment.this.startActivity(myIntent);
-//            }
-//        });
-//        _predictionArrayAdapter = new PredictionArrayAdapter(PredictionFragment.this, R.layout.place_item, _conceptArrayList);
-//        _predictionListView.setAdapter(_predictionArrayAdapter);
+            }
+        });
+        _predictionArrayAdapter = new PredictionArrayAdapter(getContext(), R.layout.prediction_item, suggestionsArrayList);
+        _predictionListView.setAdapter(_predictionArrayAdapter);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         btnChoose = (Button)
@@ -164,13 +173,28 @@ public class PredictionFragment extends Fragment {
                 HttpClient httpClient = HttpClientBuilder.create().build();
                 HttpPost post = new HttpPost(postUrl);
                 StringEntity postingString = new StringEntity(gson.toJson(temp));
+                System.out.println(gson.toJson(temp));
                 post.setEntity(postingString);
                 post.setHeader("Content-type", "application/json");
+                post.setHeader("Api-key", "r4wDGy7ABKJK1ALr1gPdLe0PKADvwnB2VVPvPuwnl4gap4FYLT");
                 HttpResponse response = httpClient.execute(post);
+                String json = EntityUtils.toString(response.getEntity());
+                System.out.println(json);
+
+                PredictingResult.Root tempRoot = new Gson().fromJson(json, new TypeToken<PredictingResult.Root>() {
+                }.getType());
+                suggestionsArrayList = tempRoot.suggestions;
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            _predictionArrayAdapter.notifyDataSetChanged();
+            _predictionArrayAdapter = new PredictionArrayAdapter(getContext(), R.layout.prediction_item, suggestionsArrayList);
+            _predictionListView.setAdapter(_predictionArrayAdapter);
         }
     }
 
@@ -182,6 +206,6 @@ public class PredictionFragment extends Fragment {
         // Get the Base64 string
         String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
 //        return imgString;
-        return "['" + imgString + "']";
+        return imgString;
     }
 }

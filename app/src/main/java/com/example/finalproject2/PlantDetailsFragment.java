@@ -1,5 +1,6 @@
 package com.example.finalproject2;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -58,8 +59,8 @@ public class PlantDetailsFragment extends Fragment {
         args.putString("Water", plant.getWater());
         args.putString("Light", plant.getLight());
         args.putString("BloomTime", plant.getBloom_time());
-        args.putString("TMin", plant.getT_min());
-        args.putString("TMax", plant.getT_max());
+        args.putInt("TMin", plant.getT_min());
+        args.putInt("TMax", plant.getT_max());
         args.putInt("LogoID", plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         fragment.setArguments(args);
         return fragment;
@@ -70,18 +71,19 @@ public class PlantDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             plant = new Plant(getArguments().getString("Name"), getArguments().getString("ScientificName"), getArguments().getString("Water"),
-                    getArguments().getString("Light"), getArguments().getString("BloomTime"), getArguments().getString("TMin"), getArguments().getString("TMax"));
+                    getArguments().getString("Light"), getArguments().getString("BloomTime"), getArguments().getInt("TMin"), getArguments().getInt("TMax"));
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void showInfo() {
         _name.setText(plant.getName());
         _scientificName.setText(plant.getScientific_name());
         _water.setText(plant.getWater());
         _light.setText(plant.getLight());
         _bloomTime.setText(plant.getBloom_time());
-        _tMin.setText(plant.getT_min());
-        _tMax.setText(plant.getT_max());
+        _tMin.setText(Integer.valueOf(plant.getT_min()).toString());
+        _tMax.setText(Integer.valueOf(plant.getT_max()).toString());
         Bitmap bmp = BitmapFactory.decodeResource(Objects.requireNonNull(getContext()).getResources(), plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         _plantImg.setImageBitmap(bmp);
         showWaterIcon();

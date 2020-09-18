@@ -4,17 +4,17 @@ import java.lang.reflect.Field;
 import java.util.Calendar;
 
 public class Plant {
-    private String name;
-    private String scientific_name;
-    private String water;
-    private String light;
-    private String bloom_time;
-    private String t_min;
-    private String t_max;
-    private Calendar calendar;
-//    private int _plantImage;
+    public String name;
+    public String scientific_name;
+    public String water;
+    public String light;
+    public String bloom_time;
+    public int t_min;
+    public int t_max;
+    public Calendar calendar;
+//    public int _plantImage;
 
-    public Plant(String _name, String _scientificName, String _water, String _light, String _bloomTime, String _tMin, String _tMax) {
+    public Plant(String _name, String _scientificName, String _water, String _light, String _bloomTime, int _tMin, int _tMax) {
         this.name = _name;
         this.scientific_name = _scientificName;
         this.water = _water;
@@ -23,6 +23,10 @@ public class Plant {
         this.t_min = _tMin;
         this.t_max = _tMax;
 //        this._plantImage = _plantImage;
+    }
+
+    public Plant() {
+
     }
 
     public String getName() {
@@ -65,19 +69,19 @@ public class Plant {
         this.bloom_time = bloom_time;
     }
 
-    public String getT_min() {
+    public int getT_min() {
         return t_min;
     }
 
-    public void setT_min(String t_min) {
+    public void setT_min(int t_min) {
         this.t_min = t_min;
     }
 
-    public String getT_max() {
+    public int getT_max() {
         return t_max;
     }
 
-    public void setT_max(String t_max) {
+    public void setT_max(int t_max) {
         this.t_max = t_max;
     }
 

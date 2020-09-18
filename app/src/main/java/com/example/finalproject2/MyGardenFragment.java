@@ -34,8 +34,7 @@ import java.util.Objects;
  */
 public class MyGardenFragment extends Fragment {
     private GridView _gridView;
-    private GridViewArrayAdapter _adapter;
-    public static ArrayList<Plant> _plants;
+    public GridViewArrayAdapter _adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,12 +74,12 @@ public class MyGardenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        loadPlants();
+//        loadPlants();
     }
 
     private void initComponent(View view) {
         _gridView = view.findViewById(R.id.gridview_plants);
-        _adapter = new GridViewArrayAdapter(Objects.requireNonNull(getContext()), R.layout.gridview_plant_item, _plants);
+        _adapter = new GridViewArrayAdapter(Objects.requireNonNull(getContext()), R.layout.gridview_plant_item, AppData._plants);
         _gridView.setAdapter(_adapter);
         _gridView.setOnItemClickListener(_gridViewItemOnClick);
     }
@@ -89,14 +88,14 @@ public class MyGardenFragment extends Fragment {
         String _json = loadJSONFromAsset();
         Type listType = new TypeToken<ArrayList<Plant>>() {
         }.getType();
-        _plants= gson.fromJson(_json, listType);
+        AppData._plants= gson.fromJson(_json, listType);
     }
 //    private void loadData() {
-//        _plants = new ArrayList<>();
+//        AppData._plants = new ArrayList<>();
 //        Plant plant = new Plant("Cactus",
 //                "Round Cactus",
 //                R.drawable.roundcactus);
-//        _plants.add(plant);
+//        AppData._plants.add(plant);
 //    }
 
     @Override
@@ -115,7 +114,7 @@ public class MyGardenFragment extends Fragment {
     private GridView.OnItemClickListener _gridViewItemOnClick = new GridView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            openFragment(PlantDetailsFragment.newInstance(_plants.get(position)));
+            openFragment(PlantDetailsFragment.newInstance(AppData._plants.get(position)));
         }
     };
     public String loadJSONFromAsset() {

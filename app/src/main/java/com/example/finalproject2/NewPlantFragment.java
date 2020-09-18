@@ -111,7 +111,7 @@ public class NewPlantFragment extends Fragment {
 
     private void loadData() {
         ArrayList<String> arrayList = new ArrayList<>();
-        for (Plant i : MyGardenFragment._plants) {
+        for (Plant i : AppData._plants) {
             arrayList.add(i.getName());
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_item, arrayList);
@@ -122,7 +122,7 @@ public class NewPlantFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //        String tutorialsName = parent.getItemAtPosition(position).toString();
 //        Toast.makeText(parent.getContext(), "Selected: " + tutorialsName, Toast.LENGTH_LONG).show();
-                pickedPlant = MyGardenFragment._plants.get(position);
+                pickedPlant = AppData._plants.get(position);
                 Bitmap bmp = BitmapFactory.decodeResource(Objects.requireNonNull(getContext()).getResources(),
                         pickedPlant.getId(pickedPlant.getName()
                                         .replaceAll(" ", "")
