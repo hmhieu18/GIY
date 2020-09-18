@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.finalproject2.Model.AppData;
+import com.example.finalproject2.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,13 +21,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.ArrayList;
-
 public class LoginActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private EditText email, password;
     private Button login, signup;
+    private boolean isNeedToRewrite = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check auth on Activity start
         if (mAuth.getCurrentUser() != null) {
+            isNeedToRewrite = false;
             onAuthSuccess(mAuth.getCurrentUser());
         }
     }
@@ -82,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            onAuthSuccess(task.getResult().getUser());
                         } else {
                             Toast.makeText(LoginActivity.this, "Sign In Failed",
                                     Toast.LENGTH_SHORT).show();
@@ -119,6 +120,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void writeNewUser(String userId, String name, String email) {
         User user = new User(name, email);
-        mDatabase.child("users").child(userId).setValue(user);
+        AppData.user = user;
+        if (isNeedToRewrite)
+            mDatabase.child("users").child(userId).setValue(user);
     }
 }

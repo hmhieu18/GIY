@@ -1,4 +1,4 @@
-package com.example.finalproject2;
+package com.example.finalproject2.Fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.finalproject2.Model.Plant;
+import com.example.finalproject2.R;
 
 import java.util.Objects;
 
@@ -148,7 +151,7 @@ public class PlantDetailsFragment extends Fragment {
         _modify = view.findViewById(R.id.modifybutton);
         _modify.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openFragment(EditScheduleFragment.newInstance((String) _water.getText()));
+                openFragment(EditScheduleFragment.newInstance((String) _name.getText()));
             };
         });
     }

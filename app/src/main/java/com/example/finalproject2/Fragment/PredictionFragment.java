@@ -1,4 +1,4 @@
-package com.example.finalproject2;
+package com.example.finalproject2.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.text.style.SuggestionSpan;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,10 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.example.finalproject2.Adapter.PredictionArrayAdapter;
+import com.example.finalproject2.Model.ImageJson;
+import com.example.finalproject2.Model.PredictingResult;
+import com.example.finalproject2.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

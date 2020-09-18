@@ -1,6 +1,7 @@
-package com.example.finalproject2;
+package com.example.finalproject2.Model;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Plant {
@@ -11,6 +12,7 @@ public class Plant {
     public String bloom_time;
     public int t_min;
     public int t_max;
+    public Schedule wateringSchedule;
     public Calendar calendar;
 //    public int _plantImage;
 
@@ -103,4 +105,17 @@ public class Plant {
         }
     }
 
+    public static class Schedule {
+        public ArrayList<Integer> dayOfWeek;
+        public int hour, min;
+
+        public Schedule(ArrayList<Integer> dayOfWeek, int hour, int min) {
+            this.dayOfWeek = dayOfWeek;
+            this.hour = hour;
+            this.min = min;
+        }
+
+        public Schedule() {
+        }
+    }
 }

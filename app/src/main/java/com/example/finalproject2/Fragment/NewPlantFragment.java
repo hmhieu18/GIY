@@ -1,4 +1,4 @@
-package com.example.finalproject2;
+package com.example.finalproject2.Fragment;
 
 import android.app.TimePickerDialog;
 import android.graphics.Bitmap;
@@ -13,10 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.finalproject2.Model.AppData;
+import com.example.finalproject2.Model.Plant;
+import com.example.finalproject2.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,7 +90,7 @@ public class NewPlantFragment extends Fragment {
         addPlantBtn = view.findViewById(R.id.add);
         addPlantBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openFragment(EditScheduleFragment.newInstance(pickedPlant.getWater()));
+                openFragment(EditScheduleFragment.newInstance(pickedPlant.getName()));
             }
         });
     }

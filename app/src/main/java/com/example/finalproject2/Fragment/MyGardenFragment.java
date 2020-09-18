@@ -1,19 +1,26 @@
-package com.example.finalproject2;
+package com.example.finalproject2.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.finalproject2.Model.AppData;
+import com.example.finalproject2.Adapter.GridViewAdapter;
+import com.example.finalproject2.Model.Plant;
+import com.example.finalproject2.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +30,6 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -34,8 +40,9 @@ import java.util.Objects;
  */
 public class MyGardenFragment extends Fragment {
     private GridView _gridView;
-    public GridViewArrayAdapter _adapter;
-
+    public GridViewAdapter _adapter;
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference ref = database.getReference("users");
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -79,16 +86,33 @@ public class MyGardenFragment extends Fragment {
 
     private void initComponent(View view) {
         _gridView = view.findViewById(R.id.gridview_plants);
-        _adapter = new GridViewArrayAdapter(Objects.requireNonNull(getContext()), R.layout.gridview_plant_item, AppData._plants);
+        _adapter = new GridViewAdapter(Objects.requireNonNull(getContext()), R.layout.gridview_plant_item, AppData.user.userPlants);
         _gridView.setAdapter(_adapter);
         _gridView.setOnItemClickListener(_gridViewItemOnClick);
     }
-    private void loadPlants(){
-        Gson gson = new Gson();
-        String _json = loadJSONFromAsset();
-        Type listType = new TypeToken<ArrayList<Plant>>() {
-        }.getType();
-        AppData._plants= gson.fromJson(_json, listType);
+
+    private void loadPlants() {
+//        Gson gson = new Gson();
+//        String _json = loadJSONFromAsset();
+//        Type listType = new TypeToken<ArrayList<Plant>>() {
+//        }.getType();
+//        AppData._plants= gson.fromJson(_json, listType);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                AppData.user.userPlants = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Log.v("TAG", "" + dataSnapshot1.getKey()); //displays the key for the node
+                    Plant temp = dataSnapshot1.getValue(Plant.class);   //gives the value for given keyname
+                    System.out.println(temp.getName());
+                    AppData.user.userPlants.add(temp);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 //    private void loadData() {
 //        AppData._plants = new ArrayList<>();
@@ -105,18 +129,21 @@ public class MyGardenFragment extends Fragment {
         initComponent(view);
         return view;
     }
+
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
     private GridView.OnItemClickListener _gridViewItemOnClick = new GridView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            openFragment(PlantDetailsFragment.newInstance(AppData._plants.get(position)));
+            openFragment(PlantDetailsFragment.newInstance(AppData.user.userPlants.get(position)));
         }
     };
+
     public String loadJSONFromAsset() {
         InputStream is = getResources().openRawResource(R.raw.list);
         Writer writer = new StringWriter();

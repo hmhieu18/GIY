@@ -1,4 +1,4 @@
-package com.example.finalproject2;
+package com.example.finalproject2.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,17 +18,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.lang.reflect.Field;
+import com.example.finalproject2.Model.Plant;
+import com.example.finalproject2.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridViewArrayAdapter extends ArrayAdapter<Plant> {
+public class GridViewAdapter extends ArrayAdapter<Plant> {
     private Context _context;
     private int _layoutID;
     private ArrayList<Plant> _plants;
 
-    public GridViewArrayAdapter(@NonNull Context context, int resource,
-                                @NonNull List<Plant> objects) {
+    public GridViewAdapter(@NonNull Context context, int resource,
+                           @NonNull List<Plant> objects) {
         super(context, resource, objects);
         _context = context;
         _layoutID = resource;

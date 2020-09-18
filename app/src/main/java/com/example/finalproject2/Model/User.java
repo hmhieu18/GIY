@@ -1,4 +1,4 @@
-package com.example.finalproject2;
+package com.example.finalproject2.Model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -10,7 +10,7 @@ public class User {
 
     public String username;
     public String email;
-    public ArrayList<Plant> userPlants;
+    public ArrayList<Plant> userPlants=new ArrayList<>();
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }

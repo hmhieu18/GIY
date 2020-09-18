@@ -9,21 +9,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.finalproject2.Fragment.MyGardenFragment;
+import com.example.finalproject2.Fragment.NewPlantFragment;
+import com.example.finalproject2.Fragment.PredictionFragment;
+import com.example.finalproject2.Model.AppData;
+import com.example.finalproject2.Model.Plant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private AppData appData;
     BottomNavigationView bottomNavigation;
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference("app_plant_list");
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference ref = database.getReference("app_plant_list");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
