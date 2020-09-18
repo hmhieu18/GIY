@@ -146,7 +146,7 @@ public class PlantDetailsFragment extends Fragment {
         _modify = view.findViewById(R.id.modifybutton);
         _modify.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openFragment(EditScheduleFragment.newInstance());
+                openFragment(EditScheduleFragment.newInstance((String) _water.getText()));
             };
         });
     }

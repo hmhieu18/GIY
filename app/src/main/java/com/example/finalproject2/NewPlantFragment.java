@@ -38,6 +38,7 @@ public class NewPlantFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Plant pickedPlant;
 
     public NewPlantFragment() {
         // Required empty public constructor
@@ -86,10 +87,11 @@ public class NewPlantFragment extends Fragment {
         addPlantBtn = view.findViewById(R.id.add);
         addPlantBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openFragment(EditScheduleFragment.newInstance());
-            };
+                openFragment(EditScheduleFragment.newInstance(pickedPlant.getWater()));
+            }
         });
     }
+
     public void showTimePicker() {
         final Calendar myCalender = Calendar.getInstance();
         int hour = myCalender.get(Calendar.HOUR_OF_DAY);
@@ -106,6 +108,7 @@ public class NewPlantFragment extends Fragment {
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
     }
+
     private void loadData() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (Plant i : MyGardenFragment._plants) {
@@ -119,10 +122,9 @@ public class NewPlantFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //        String tutorialsName = parent.getItemAtPosition(position).toString();
 //        Toast.makeText(parent.getContext(), "Selected: " + tutorialsName, Toast.LENGTH_LONG).show();
+                pickedPlant = MyGardenFragment._plants.get(position);
                 Bitmap bmp = BitmapFactory.decodeResource(Objects.requireNonNull(getContext()).getResources(),
-                        MyGardenFragment._plants.get(position)
-                                .getId(MyGardenFragment._plants
-                                        .get(position).getName()
+                        pickedPlant.getId(pickedPlant.getName()
                                         .replaceAll(" ", "")
                                         .toLowerCase(), R.drawable.class));
                 imageView.setImageBitmap(bmp);
@@ -134,6 +136,7 @@ public class NewPlantFragment extends Fragment {
         });
 
     }
+
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);

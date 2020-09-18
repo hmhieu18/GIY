@@ -24,18 +24,25 @@ import java.util.Objects;
 public class EditScheduleFragment extends Fragment {
     private CheckBox mon, tue, wed, thu, fri, sat, sun;
     private Button finish;
-
+    private String waterCondition;
     public EditScheduleFragment() {
         // Required empty public constructor
     }
 
-    public static EditScheduleFragment newInstance() {
-        return new EditScheduleFragment();
+    public static EditScheduleFragment newInstance(String water) {
+        EditScheduleFragment fragment = new EditScheduleFragment();
+        Bundle args = new Bundle();
+        args.putString("Water", water);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            waterCondition = getArguments().getString("Water");
+        }
     }
 
     @Override

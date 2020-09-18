@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +18,13 @@ import android.widget.ImageView;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -158,7 +158,15 @@ public class PredictionFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-
+                ImageJson temp = new ImageJson(getEncoded64ImageStringFromBitmap(bitmap));
+                String postUrl = "https://api.plant.id/v2/identify";
+                Gson gson = new Gson();
+                HttpClient httpClient = HttpClientBuilder.create().build();
+                HttpPost post = new HttpPost(postUrl);
+                StringEntity postingString = new StringEntity(gson.toJson(temp));
+                post.setEntity(postingString);
+                post.setHeader("Content-type", "application/json");
+                HttpResponse response = httpClient.execute(post);
             } catch (Exception e) {
                 e.printStackTrace();
             }
