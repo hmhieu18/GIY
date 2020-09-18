@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">GIY - Grow It Yourself</string>
     <string name="garden">Garden</string>
+    <string name="plantID_API_Key">r4wDGy7ABKJK1ALr1gPdLe0PKADvwnB2VVPvPuwnl4gap4FYLT</string>
+
 </resources>

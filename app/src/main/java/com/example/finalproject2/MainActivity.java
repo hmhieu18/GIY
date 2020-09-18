@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.navigation_add_plant:
                             openFragment(NewPlantFragment.newInstance("", ""));
                             return true;
+                        case R.id.navigation_camera:
+                            openFragment(SettingFragment.newInstance("", ""));
+                            return true;
                     }
                     return false;
                 }

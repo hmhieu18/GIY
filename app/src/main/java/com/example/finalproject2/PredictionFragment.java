@@ -19,23 +19,6 @@
 //import androidx.annotation.NonNull;
 //import androidx.appcompat.app.AppCompatActivity;
 //
-////import com.clarifai.channel.ClarifaiChannel;
-////import com.clarifai.credentials.ClarifaiCallCredentials;
-////import com.clarifai.grpc.api.Concept;
-////import com.clarifai.grpc.api.Data;
-////import com.clarifai.grpc.api.Image;
-////import com.clarifai.grpc.api.Input;
-////import com.clarifai.grpc.api.MultiOutputResponse;
-////import com.clarifai.grpc.api.PostModelOutputsRequest;
-////import com.clarifai.grpc.api.V2Grpc;
-////import com.clarifai.grpc.api.status.StatusCode;
-////import com.google.android.gms.tasks.OnFailureListener;
-////import com.google.android.gms.tasks.OnSuccessListener;
-////import com.google.firebase.storage.FirebaseStorage;
-////import com.google.firebase.storage.OnProgressListener;
-////import com.google.firebase.storage.StorageReference;
-////import com.google.firebase.storage.UploadTask;
-//
 //import java.io.IOException;
 //import java.util.ArrayList;
 //import java.util.UUID;
