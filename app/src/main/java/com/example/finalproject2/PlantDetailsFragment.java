@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Objects;
 
@@ -34,6 +36,7 @@ public class PlantDetailsFragment extends Fragment {
     private ImageView _lightIcon1;
     private ImageView _lightIcon2;
     private ImageView _lightIcon3;
+    private Button _modify;
 
 
     public PlantDetailsFragment() {
@@ -140,6 +143,18 @@ public class PlantDetailsFragment extends Fragment {
         _lightIcon1 = view.findViewById(R.id.lightIcon1);
         _lightIcon2 = view.findViewById(R.id.lightIcon2);
         _lightIcon3 = view.findViewById(R.id.lightIcon3);
+        _modify = view.findViewById(R.id.modifybutton);
+        _modify.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openFragment(EditScheduleFragment.newInstance());
+            };
+        });
+    }
 
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

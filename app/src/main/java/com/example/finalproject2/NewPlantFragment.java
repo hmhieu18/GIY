@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,7 +86,7 @@ public class NewPlantFragment extends Fragment {
         addPlantBtn = view.findViewById(R.id.add);
         addPlantBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showTimePicker();
+                openFragment(EditScheduleFragment.newInstance());
             };
         });
     }
@@ -132,5 +133,11 @@ public class NewPlantFragment extends Fragment {
             }
         });
 
+    }
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

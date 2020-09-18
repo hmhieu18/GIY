@@ -11,8 +11,10 @@ import android.widget.CheckBox;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +22,7 @@ import java.util.Calendar;
  * create an instance of this fragment.
  */
 public class EditScheduleFragment extends Fragment {
-    private CheckBox mon, tue, wed, thu, fri, sat, sun, pickTimeBtn;
+    private CheckBox mon, tue, wed, thu, fri, sat, sun;
     private Button finish;
 
     public EditScheduleFragment() {
@@ -89,13 +91,19 @@ public class EditScheduleFragment extends Fragment {
     }
 
     public void setalarm(int weekno, int hour, int min) {
-
-        cal.set(Calendar.DAY_OF_WEEK, weekno);
-        cal.set(Calendar.HOUR, hour);
-        cal.set(Calendar.MINUTE, min);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 1 * 60 * 60 * 1000, pendingIntent);
+//
+//        cal.set(Calendar.DAY_OF_WEEK, weekno);
+//        cal.set(Calendar.HOUR, hour);
+//        cal.set(Calendar.MINUTE, min);
+//        cal.set(Calendar.SECOND, 0);
+//        cal.set(Calendar.MILLISECOND, 0);
+//
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 1 * 60 * 60 * 1000, pendingIntent);
+    }
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
