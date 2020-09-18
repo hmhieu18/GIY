@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                             openFragment(NewPlantFragment.newInstance("", ""));
                             return true;
                         case R.id.navigation_camera:
-                            openFragment(SettingFragment.newInstance("", ""));
+                            openFragment(PredictionFragment.newInstance("", ""));
                             return true;
                     }
                     return false;

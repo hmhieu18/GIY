@@ -1,54 +1,118 @@
-//package com.example.finalproject2;
-//
-//import android.annotation.SuppressLint;
-//import android.app.ProgressDialog;
-//import android.content.Intent;
-//import android.graphics.Bitmap;
-//import android.net.Uri;
-//import android.os.Bundle;
-//import android.os.StrictMode;
-//import android.provider.MediaStore;
-//import android.util.Log;
-//import android.view.View;
-//import android.widget.AdapterView;
-//import android.widget.Button;
-//import android.widget.ImageView;
-//import android.widget.ListView;
-//import android.widget.Toast;
-//
-//import androidx.annotation.NonNull;
-//import androidx.appcompat.app.AppCompatActivity;
-//
-//import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.UUID;
-//
-////import io.grpc.Channel;
-//
-//public class PredictionFragment extends AppCompatActivity {
-////    private ListView _predictionListView;
-////    public static PredictionArrayAdapter _predictionArrayAdapter;
-////    private ArrayList<Concept> _conceptArrayList;
-//    private Button btnChoose, btnUpload;
-//    private ImageView imageView;
-////    private String url;
-////    private Uri filePath;
-////    //Firebase
-////    FirebaseStorage storage;
-////    StorageReference storageReference;
-////    private final int PICK_IMAGE_REQUEST = 71;
-////    // Construct one of the channels you want to use
-////    Channel channel = ClarifaiChannel.INSTANCE.getJsonChannel();
-//
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_prediction);
-//        initComponent();
-//    }
-//
-//    private void initComponent() {
+package com.example.finalproject2;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Objects;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link PredictionFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class PredictionFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private static final int RESULT_OK = -1;
+    private Uri filePath;
+    private Button btnChoose, btnUpload;
+    private ImageView imageView;
+    private final int PICK_IMAGE_REQUEST = 71;
+    private Bitmap bitmap;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public PredictionFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment HomeFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static PredictionFragment newInstance(String param1, String param2) {
+        PredictionFragment fragment = new PredictionFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_prediction, container, false);
+        initComponent(view);
+        return view;
+    }
+
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getActivity()).getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void initComponent(View view) {
 //        _conceptArrayList = new ArrayList<>();
 //        _predictionListView = findViewById(R.id.predictionresults);
 //        _predictionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,127 +125,55 @@
 //        });
 //        _predictionArrayAdapter = new PredictionArrayAdapter(PredictionFragment.this, R.layout.place_item, _conceptArrayList);
 //        _predictionListView.setAdapter(_predictionArrayAdapter);
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
-//        btnChoose = (Button)
-//
-//                findViewById(R.id.choose);
-//
-//        btnUpload = (Button)
-//
-//                findViewById(R.id.upload);
-//
-//        imageView = (ImageView)
-//
-//                findViewById(R.id.imageView);
-//        btnChoose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                chooseImage();
-//            }
-//        });
-//
-//        btnUpload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                uploadImage();
-//            }
-//        });
-//
-//        storage = FirebaseStorage.getInstance();
-//        storageReference = storage.getReference();
-//    }
-//
-//    private void chooseImage() {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-//                && data != null && data.getData() != null) {
-//            filePath = data.getData();
-//            try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-//                imageView.setImageBitmap(bitmap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//
-//    private void uploadImage() {
-//
-//        if (filePath != null) {
-//            final ProgressDialog progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("Predicting...");
-//            progressDialog.show();
-//
-//            final StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
-//            ref.putFile(filePath)
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                @Override
-//                                public void onSuccess(Uri uri) {
-//                                    // getting image uri and converting into string
-//                                    Uri downloadUrl = uri;
-//                                    Log.d("url", downloadUrl.toString());
-//                                    url = downloadUrl.toString();
-//                                    predict();
-//                                }
-//                            });
-//                        }
-//                    })
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(PredictionFragment.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-//                                    .getTotalByteCount());
-//                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-//                        }
-//                    });
-//        }
-//    }
-//
-//    @SuppressLint("DefaultLocale")
-//    public void predict() {
-//        V2Grpc.V2BlockingStub stub = V2Grpc.newBlockingStub(channel)
-//                .withCallCredentials(new ClarifaiCallCredentials("cf07d6a2ca4840be80042319047af49e"));
-//
-//        MultiOutputResponse response = stub.postModelOutputs(
-//                PostModelOutputsRequest.newBuilder()
-//                        .setModelId("bd367be194cf45149e75f01d59f77ba7")
-//                        .addInputs(
-//                                Input.newBuilder().setData(
-//                                        Data.newBuilder().setImage(
-//                                                Image.newBuilder().setUrl(url)
-//                                        )
-//                                )
-//                        )
-//                        .build()
-//        );
-//
-//        if (response.getStatus().getCode() != StatusCode.SUCCESS) {
-//            throw new RuntimeException("Request failed, status: " + response.getStatus());
-//        }
-//        for (Concept c : response.getOutputs(0).getData().getConceptsList()) {
-//            System.out.println(String.format("%12s: %,.2f", c.getName(), c.getValue()));
-//        }
-//        _conceptArrayList = new ArrayList<Concept>(response.getOutputs(0).getData().getConceptsList());
-//        _predictionArrayAdapter = new PredictionArrayAdapter(PredictionFragment.this, R.layout.place_item, _conceptArrayList);
-//        _predictionListView.setAdapter(_predictionArrayAdapter);
-//    }
-//}
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        btnChoose = (Button)
+
+                view.findViewById(R.id.choose);
+
+        btnUpload = (Button)
+
+                view.findViewById(R.id.upload);
+
+        imageView = (ImageView)
+
+                view.findViewById(R.id.imageView);
+        btnChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage();
+            }
+        });
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new makePrediction().execute();
+            }
+        });
+    }
+
+    class makePrediction extends AsyncTask<Void, Void, Void> {
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteFormat = stream.toByteArray();
+
+        // Get the Base64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+//        return imgString;
+        return "['" + imgString + "']";
+    }
+}
