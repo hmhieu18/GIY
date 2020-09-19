@@ -90,7 +90,7 @@ public class NewPlantFragment extends Fragment {
         addPlantBtn = view.findViewById(R.id.add);
         addPlantBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openFragment(EditScheduleFragment.newInstance(pickedPlant.getName()));
+                openFragment(EditScheduleFragment.newInstance(pickedPlant.getName(), -1));
             }
         });
     }

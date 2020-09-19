@@ -41,7 +41,7 @@ public class PlantDetailsFragment extends Fragment {
     private ImageView _lightIcon2;
     private ImageView _lightIcon3;
     private Button _modify;
-
+    private int index;
 
     public PlantDetailsFragment() {
         // Required empty public constructor
@@ -54,7 +54,7 @@ public class PlantDetailsFragment extends Fragment {
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlantDetailsFragment newInstance(Plant plant) {
+    public static PlantDetailsFragment newInstance(Plant plant, int _index) {
         PlantDetailsFragment fragment = new PlantDetailsFragment();
         Bundle args = new Bundle();
         args.putString("Name", plant.getName());
@@ -64,6 +64,7 @@ public class PlantDetailsFragment extends Fragment {
         args.putString("BloomTime", plant.getBloom_time());
         args.putInt("TMin", plant.getT_min());
         args.putInt("TMax", plant.getT_max());
+        args.putInt("index", _index);
         args.putInt("LogoID", plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         fragment.setArguments(args);
         return fragment;
@@ -75,6 +76,7 @@ public class PlantDetailsFragment extends Fragment {
         if (getArguments() != null) {
             plant = new Plant(getArguments().getString("Name"), getArguments().getString("ScientificName"), getArguments().getString("Water"),
                     getArguments().getString("Light"), getArguments().getString("BloomTime"), getArguments().getInt("TMin"), getArguments().getInt("TMax"));
+            index = getArguments().getInt("index");
         }
     }
 
@@ -151,8 +153,11 @@ public class PlantDetailsFragment extends Fragment {
         _modify = view.findViewById(R.id.modifybutton);
         _modify.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openFragment(EditScheduleFragment.newInstance((String) _name.getText()));
-            };
+                System.out.println(plant.getName());
+                openFragment(EditScheduleFragment.newInstance(plant.getName(), index));
+            }
+
+            ;
         });
     }
 

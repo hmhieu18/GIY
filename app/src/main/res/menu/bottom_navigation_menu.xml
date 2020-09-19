@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_add"
         android:title="New plant" />
     <item
-        android:id="@+id/navigation_calendar"
+        android:id="@+id/navigation_schedule"
         android:icon="@drawable/ic_calendar"
         android:title="Calendar" />
     <item

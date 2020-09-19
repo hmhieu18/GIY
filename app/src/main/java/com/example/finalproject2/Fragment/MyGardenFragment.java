@@ -16,6 +16,7 @@ import com.example.finalproject2.Model.AppData;
 import com.example.finalproject2.Adapter.GridViewAdapter;
 import com.example.finalproject2.Model.Plant;
 import com.example.finalproject2.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +48,8 @@ public class MyGardenFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -85,27 +87,30 @@ public class MyGardenFragment extends Fragment {
     }
 
     private void initComponent(View view) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
         _gridView = view.findViewById(R.id.gridview_plants);
+
+        loadUserPlants();
+    }
+
+    private void refreshGridView() {
         _adapter = new GridViewAdapter(Objects.requireNonNull(getContext()), R.layout.gridview_plant_item, AppData.user.userPlants);
         _gridView.setAdapter(_adapter);
         _gridView.setOnItemClickListener(_gridViewItemOnClick);
     }
 
-    private void loadPlants() {
-//        Gson gson = new Gson();
-//        String _json = loadJSONFromAsset();
-//        Type listType = new TypeToken<ArrayList<Plant>>() {
-//        }.getType();
-//        AppData._plants= gson.fromJson(_json, listType);
-        ref.addValueEventListener(new ValueEventListener() {
+    private void loadUserPlants() {
+        mDatabase.child("users").child(mAuth.getUid()).child("plants_list").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AppData.user.userPlants = new ArrayList<>();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Log.v("TAG", "" + dataSnapshot1.getKey()); //displays the key for the node
+                    Log.v("@@@", "" + dataSnapshot1.getKey()); //displays the key for the node
                     Plant temp = dataSnapshot1.getValue(Plant.class);   //gives the value for given keyname
                     System.out.println(temp.getName());
                     AppData.user.userPlants.add(temp);
+                    refreshGridView();
                 }
             }
             @Override
@@ -114,14 +119,6 @@ public class MyGardenFragment extends Fragment {
             }
         });
     }
-//    private void loadData() {
-//        AppData._plants = new ArrayList<>();
-//        Plant plant = new Plant("Cactus",
-//                "Round Cactus",
-//                R.drawable.roundcactus);
-//        AppData._plants.add(plant);
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -140,7 +137,7 @@ public class MyGardenFragment extends Fragment {
     private GridView.OnItemClickListener _gridViewItemOnClick = new GridView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            openFragment(PlantDetailsFragment.newInstance(AppData.user.userPlants.get(position)));
+            openFragment(PlantDetailsFragment.newInstance(AppData.user.userPlants.get(position), position));
         }
     };
 

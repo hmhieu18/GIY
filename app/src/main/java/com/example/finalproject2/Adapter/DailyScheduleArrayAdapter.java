@@ -1,5 +1,6 @@
 package com.example.finalproject2.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,18 +14,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.finalproject2.Model.PredictingResult;
+import com.example.finalproject2.Model.WeekScheduleItem;
 import com.example.finalproject2.R;
 
 import java.util.List;
 
-public class PredictionArrayAdapter extends ArrayAdapter<PredictingResult.Suggestion> {
+public class DailyScheduleArrayAdapter extends ArrayAdapter<WeekScheduleItem.ScheduleItem> {
     private Context _context;
     private int _layoutID;
-    private List<PredictingResult.Suggestion> _items;
+    private List<WeekScheduleItem.ScheduleItem> _items;
 
 
-    public PredictionArrayAdapter(@NonNull Context context, int resource, @NonNull List<PredictingResult.Suggestion> objects) {
+    public DailyScheduleArrayAdapter(@NonNull Context context, int resource, @NonNull List<WeekScheduleItem.ScheduleItem> objects) {
         super(context, resource, objects);
         _context = context;
         _layoutID = resource;
@@ -36,10 +37,11 @@ public class PredictionArrayAdapter extends ArrayAdapter<PredictingResult.Sugges
         return _items.size();
     }
 
-    public PredictingResult.Suggestion getItem(int position) {
+    public WeekScheduleItem.ScheduleItem getItem(int position) {
         return _items.get(position);
     }
 
+    @SuppressLint({"SetTextI18n", "ResourceType"})
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -52,17 +54,12 @@ public class PredictionArrayAdapter extends ArrayAdapter<PredictingResult.Sugges
         TextView textView = convertView.findViewById(R.id.plantname);
         TextView textViewSub = convertView.findViewById(R.id.description);
         TextView textViewRating = convertView.findViewById(R.id.percentage);
-        final PredictingResult.Suggestion suggestion = _items.get(position);
-        if (suggestion != null) {
-            imageView.setImageResource(R.drawable.ic_leaf);
-            if (suggestion.getPlant_details().common_names != null)
-                textView.setText(suggestion.getPlant_details().common_names.get(0));
-            else textView.setText(suggestion.getPlant_name());
-            if (suggestion.getPlant_details().getWiki_description().value.length() < 100)
-                textViewSub.setText(suggestion.getPlant_details().getWiki_description().value);
-            else textViewSub.setText(suggestion.getPlant_details().getWiki_description().value.substring(0, 99));
-            String result = String.format("%.2f", suggestion.getProbability() * 100);
-            textViewRating.setText(result + '%');
+        final WeekScheduleItem.ScheduleItem scheduleItem = _items.get(position);
+        if (scheduleItem != null) {
+            imageView.setImageResource(R.drawable.ic_wateringicon);
+            textView.setText(Integer.valueOf(scheduleItem.getHour()).toString() + ':' + Integer.valueOf(scheduleItem.getMin()).toString());
+            textViewSub.setText("Watering " + scheduleItem.getName());
+            textViewRating.setText("");
         }
         return convertView;
     }
