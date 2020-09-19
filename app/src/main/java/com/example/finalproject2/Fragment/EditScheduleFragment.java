@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class EditScheduleFragment extends Fragment {
     private int timetowater;
     private TimePicker timePicker;
     private TextView repeatTextView;
+    private int countBoxChecked = 0;
 
     public EditScheduleFragment() {
         // Required empty public constructor
@@ -94,8 +96,30 @@ public class EditScheduleFragment extends Fragment {
         checkBoxArrayList.add(temp);
         temp = view.findViewById(R.id.sat);
         checkBoxArrayList.add(temp);
-
+        for (CheckBox cb : checkBoxArrayList) {
+            cb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (((CompoundButton) view).isChecked()) {
+                        countBoxChecked++;
+                    } else {
+                        countBoxChecked--;
+                    }
+                    if (countBoxChecked >= timetowater)
+                        for (CheckBox cb1 : checkBoxArrayList) {
+                            if (!cb1.isChecked()) cb1.setEnabled(false);
+                        }
+                    else
+                        for (CheckBox cb1 : checkBoxArrayList) {
+                            if (!cb1.isChecked()) cb1.setEnabled(true);
+                        }
+                }
+            });
+        }
         timePicker = view.findViewById(R.id.edit_alarm_time_picker);
+        if (index != -1) {
+            loadOldSchedule();
+        }
         repeatTextView = view.findViewById(R.id.repeat);
         finish = view.findViewById(R.id.finish);
         for (Plant i : AppData._plants) {
@@ -104,6 +128,21 @@ public class EditScheduleFragment extends Fragment {
                 waterConditionHandling();
                 break;
             }
+        }
+    }
+
+    private void loadOldSchedule() {
+        timePicker.setHour(AppData.user.userPlants.get(index).wateringSchedule.hour);
+        timePicker.setMinute(AppData.user.userPlants.get(index).wateringSchedule.min);
+        for (int i = 0; i < checkBoxArrayList.size(); i++) {
+            if (AppData.user.userPlants.get(index).wateringSchedule.dayOfWeek != null)
+                if (AppData.user.userPlants.get(index).wateringSchedule.dayOfWeek.contains(i + 1)) {
+                    checkBoxArrayList.get(i).setChecked(true);
+                    countBoxChecked++;
+                }
+        }
+        for (CheckBox cb1 : checkBoxArrayList) {
+            if (!cb1.isChecked()) cb1.setEnabled(false);
         }
     }
 
@@ -116,36 +155,30 @@ public class EditScheduleFragment extends Fragment {
         repeatTextView.setText(currentPlant.getName() + " need to be watered " + timetowater + " times per week");
         finish.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                int hourFromPicker = timePicker.getHour();
-                int minuteFromPicker = timePicker.getMinute();
-                int countCheck = countDays();
-                if (countCheck == timetowater) {
-                    Toast.makeText(getContext(), "Setting Notification...", Toast.LENGTH_SHORT).show();
-                    ArrayList<Integer> alarmDays = getDayArrayList();
-                    addAlarm(hourFromPicker, minuteFromPicker, alarmDays);
-                    currentPlant.wateringSchedule = new Plant.Schedule(alarmDays, hourFromPicker, minuteFromPicker);
-                    if (index == -1)
-                        AppData.user.userPlants.add(currentPlant);
-                    else
-                        AppData.user.userPlants.get(index).wateringSchedule = currentPlant.wateringSchedule;
-                    saveUserNewPlantToDatabase();
-                } else if (countCheck < timetowater) {
-                    Toast.makeText(getContext(), "Times to water are less than necessary, you have to check more", Toast.LENGTH_SHORT).show();
-                } else if (countCheck > timetowater) {
-                    Toast.makeText(getContext(), "Times to water are more than necessary, you have to uncheck some days", Toast.LENGTH_SHORT).show();
-                }
-                openFragment(MyGardenFragment.newInstance("", ""));
+                finishClicked();
             }
         });
     }
 
-    private int countDays() {
-        int countCheck = 0;
-        for (CheckBox cb : checkBoxArrayList) {
-            if (cb.isChecked()) countCheck++;
+    private void finishClicked() {
+        int hourFromPicker = timePicker.getHour();
+        int minuteFromPicker = timePicker.getMinute();
+        if (countBoxChecked == timetowater) {
+            Toast.makeText(getContext(), "Setting Notification...", Toast.LENGTH_SHORT).show();
+            ArrayList<Integer> alarmDays = getDayArrayList();
+            addAlarm(hourFromPicker, minuteFromPicker, alarmDays);
+            currentPlant.wateringSchedule = new Plant.Schedule(alarmDays, hourFromPicker, minuteFromPicker);
+            if (index == -1)
+                AppData.user.userPlants.add(currentPlant);
+            else
+                AppData.user.userPlants.get(index).wateringSchedule = currentPlant.wateringSchedule;
+            saveUserNewPlantToDatabase();
+            openFragment(MyGardenFragment.newInstance("", ""));
+        } else if (countBoxChecked < timetowater) {
+            Toast.makeText(getContext(), "Times to water are less than necessary, you have to check at least " + Integer.valueOf(timetowater).toString() + " time(s)", Toast.LENGTH_SHORT).show();
         }
-        return countCheck;
     }
+
 
     private ArrayList<Integer> getDayArrayList() {
         ArrayList<Integer> alarmDays = new ArrayList<>();

@@ -14,10 +14,12 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         tools:srcCompat="@tools:sample/avatars" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/Name"
                     android:layout_width="0dp"
@@ -45,11 +48,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/nametxtview"
                     android:layout_width="200dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -66,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/scientific_name"
                     android:layout_width="0dp"
@@ -75,15 +80,17 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/scientificnametxtview"
                     android:layout_width="200dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -95,11 +102,13 @@
             android:gravity="start"
             android:orientation="horizontal"
             android:weightSum="2">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/water"
                     android:layout_width="0dp"
@@ -116,28 +125,31 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:weightSum="2">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1">
+
                     <TextView
                         android:id="@+id/watertextview"
                         android:layout_width="200dp"
-                        android:textSize="18sp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="left">
+                    android:layout_gravity="left"
+                    android:layout_weight="1">
+
                     <ImageView
+                        android:id="@+id/waterIcon"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:scaleType="fitCenter"
-                        android:id="@+id/waterIcon"
-                        ></ImageView>
+                        android:scaleType="fitCenter"></ImageView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -155,6 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/lightcondition"
                     android:layout_width="0dp"
@@ -169,11 +182,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/lighttextview"
                     android:layout_width="200dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -190,6 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -208,31 +223,33 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
                         android:id="@+id/lightIcon1"
-                        ></ImageView>
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"></ImageView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
                         android:id="@+id/lightIcon2"
-                        ></ImageView>
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"></ImageView>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
+
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="45dp"
                         android:id="@+id/lightIcon3"
-                        ></ImageView>
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"></ImageView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -250,6 +267,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/bloom_time"
                     android:layout_width="0dp"
@@ -264,13 +282,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/bloomtimetextview"
                     android:layout_width="200dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -283,10 +301,12 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="2">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/lowest_temperature"
                     android:layout_width="0dp"
@@ -296,15 +316,17 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/tmintextview"
                     android:layout_width="200dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -321,6 +343,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/highest_temperature"
                     android:layout_width="0dp"
@@ -330,27 +353,66 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
+
                 <TextView
                     android:id="@+id/tmaxtextview"
                     android:layout_width="200dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
 
 
-    <Button
-        android:id="@+id/modifybutton"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ic_rectangle"
-        android:text="Modify Watering Schedule"
-        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/modifybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_rectangle"
+            android:text="Schedule"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/shop"
+            android:layout_weight="1"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_rectangle"
+            android:text="Shop"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/tutorial"
+            android:layout_weight="1"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_rectangle"
+            android:text="Tutorial"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -1,8 +1,10 @@
 package com.example.finalproject2.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.finalproject2.Model.AppData;
 import com.example.finalproject2.Model.Plant;
 import com.example.finalproject2.R;
 
@@ -159,6 +162,24 @@ public class PlantDetailsFragment extends Fragment {
 
             ;
         });
+        Button shop = view.findViewById(R.id.shop);
+        shop.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                searchStore(index);
+            }
+        });
+        Button tutorial = view.findViewById(R.id.tutorial);
+        tutorial.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openYoutube("url");
+            }
+        });
+    }
+
+    private void openYoutube(String videoId) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
+        intent.putExtra("VIDEO_ID", videoId);
+        startActivity(intent);
     }
 
     public void openFragment(Fragment fragment) {
@@ -166,5 +187,11 @@ public class PlantDetailsFragment extends Fragment {
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void searchStore(int item) {
+        Intent myIntent = new Intent(getActivity(), SearchFragment.class);
+        myIntent.putExtra("query", "Where to buy " + AppData.user.userPlants.get(item).getName());
+        Objects.requireNonNull(getActivity()).startActivity(myIntent);
     }
 }

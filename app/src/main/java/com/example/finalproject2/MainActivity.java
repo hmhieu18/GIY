@@ -29,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private AppData appData;
     BottomNavigationView bottomNavigation;
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
     private DatabaseReference ref = database.getReference("app_plant_list");
 
     @Override

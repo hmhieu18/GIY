@@ -3,7 +3,6 @@ package com.example.finalproject2.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -26,7 +25,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
@@ -195,13 +193,19 @@ public class MyGardenFragment extends Fragment {
                 if (options[item].equals("Remove this plant")) {
                     removePlantByID(item);
                 } else if (options[item].equals("Where to buy")) {
-
+                    searchStore(item);
                 } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
         });
         builder.show();
+    }
+
+    private void searchStore(int item) {
+        Intent myIntent = new Intent(getActivity(), SearchFragment.class);
+        myIntent.putExtra("query", "Where to buy " + AppData.user.userPlants.get(item).getName());
+        Objects.requireNonNull(getActivity()).startActivity(myIntent);
     }
 
     private void removePlantByID(int item) {
