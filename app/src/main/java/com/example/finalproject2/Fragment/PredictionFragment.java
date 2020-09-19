@@ -130,9 +130,10 @@ public class PredictionFragment extends Fragment {
         _predictionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent myIntent = new Intent(PredictionFragment.this, searchResult.class);
-//                myIntent.putExtra("query", String.valueOf(suggestionsArrayList.get(position).getName()));
-//                PredictionFragment.this.startActivity(myIntent);
+                String url = suggestionsArrayList.get(position).plant_details.url;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
         _predictionArrayAdapter = new PredictionArrayAdapter(getContext(), R.layout.prediction_item, suggestionsArrayList);

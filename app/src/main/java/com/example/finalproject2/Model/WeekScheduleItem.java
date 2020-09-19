@@ -18,7 +18,7 @@ public class WeekScheduleItem {
 
 
     public WeekScheduleItem() {
-        for (int i=0; i<8; i++) {
+        for (int i = 0; i < 8; i++) {
             dayScheduleItemsArrayList.add(new DayScheduleItem());
         }
         convertPlantListToSchedule();
@@ -27,14 +27,14 @@ public class WeekScheduleItem {
     public void convertPlantListToSchedule() {
         for (int i = 1; i < 8; i++) {
             for (Plant p : AppData.user.userPlants) {
-                for (int day : p.wateringSchedule.dayOfWeek) {
-                    if (i == day)
-                    {
-                        dayScheduleItemsArrayList.get(i)
-                                .scheduleItemArrayList.add(new ScheduleItem(p.name, p.getId(p.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class),
-                                p.wateringSchedule.hour, p.wateringSchedule.min));
+                if (p.wateringSchedule.dayOfWeek != null)
+                    for (int day : p.wateringSchedule.dayOfWeek) {
+                        if (i == day) {
+                            dayScheduleItemsArrayList.get(i)
+                                    .scheduleItemArrayList.add(new ScheduleItem(p.name, p.getId(p.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class),
+                                    p.wateringSchedule.hour, p.wateringSchedule.min));
+                        }
                     }
-                }
             }
         }
 

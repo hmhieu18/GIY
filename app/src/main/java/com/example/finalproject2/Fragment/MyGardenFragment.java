@@ -1,7 +1,12 @@
 package com.example.finalproject2.Fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
@@ -98,6 +104,7 @@ public class MyGardenFragment extends Fragment {
         _adapter = new GridViewAdapter(Objects.requireNonNull(getContext()), R.layout.gridview_plant_item, AppData.user.userPlants);
         _gridView.setAdapter(_adapter);
         _gridView.setOnItemClickListener(_gridViewItemOnClick);
+        _gridView.setOnItemLongClickListener(_gridViewItemOnLongClick);
     }
 
     private void loadUserPlants() {
@@ -113,12 +120,14 @@ public class MyGardenFragment extends Fragment {
                     refreshGridView();
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -138,6 +147,13 @@ public class MyGardenFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             openFragment(PlantDetailsFragment.newInstance(AppData.user.userPlants.get(position), position));
+        }
+    };
+    private GridView.OnItemLongClickListener _gridViewItemOnLongClick = new GridView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            optionPlace(getContext(), i);
+            return true;
         }
     };
 
@@ -163,5 +179,34 @@ public class MyGardenFragment extends Fragment {
             }
         }
         return writer.toString();
+    }
+
+    private void optionPlace(final Context context, final int i) {
+        final CharSequence[] options = {"Remove this plant", "Where to buy", "Cancel"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Option");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Remove this plant")) {
+                    removePlantByID(item);
+                } else if (options[item].equals("Where to buy")) {
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void removePlantByID(int item) {
+        AppData.user.userPlants.remove(item);
+        mDatabase.child("users").child(mAuth.getUid()).child("plants_list").setValue(AppData.user.userPlants);
+        _gridView.invalidateViews();
     }
 }

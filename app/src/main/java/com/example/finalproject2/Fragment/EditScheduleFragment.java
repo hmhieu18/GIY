@@ -149,7 +149,7 @@ public class EditScheduleFragment extends Fragment {
 
     private ArrayList<Integer> getDayArrayList() {
         ArrayList<Integer> alarmDays = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             if (checkBoxArrayList.get(i).isChecked()) alarmDays.add(i + 1);
         }
         return alarmDays;
