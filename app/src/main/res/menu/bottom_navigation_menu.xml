@@ -16,4 +16,8 @@
         android:id="@+id/navigation_camera"
         android:icon="@drawable/ic_icon_feather_camera"
         android:title="Predict" />
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Settings" />
 </menu>

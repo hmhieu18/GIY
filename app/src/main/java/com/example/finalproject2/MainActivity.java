@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.example.finalproject2.Fragment.MyGardenFragment;
 import com.example.finalproject2.Fragment.NewPlantFragment;
 import com.example.finalproject2.Fragment.PredictionFragment;
+import com.example.finalproject2.Fragment.SettingFragment;
 import com.example.finalproject2.Model.AppData;
 import com.example.finalproject2.Model.Plant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -81,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_camera:
                             openFragment(PredictionFragment.newInstance("", ""));
+                            return true;
+                        case R.id.navigation_setting:
+                            openFragment(SettingFragment.newInstance("", ""));
                             return true;
                     }
                     return false;
