@@ -4,44 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <EditText
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginBottom="20dp"
         android:ems="10"
-        android:hint="Username"
+        android:gravity="center"
+        android:hint="Email"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginBottom="20dp"
         android:ems="10"
-        android:hint="Password"
+        android:gravity="center"
+        android:hint="Password(at least 6 characters)"
         android:inputType="textPassword" />
 
     <Button
         android:id="@+id/login"
-        android:gravity="center"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:background="@drawable/ic_rectangle"
-        android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Login" />
+
     <Button
         android:id="@+id/signup"
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/ic_rectangle"
+        android:gravity="center"
         android:text="SignUp" />
 </LinearLayout>

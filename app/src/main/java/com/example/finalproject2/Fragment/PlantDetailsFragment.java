@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,13 +172,14 @@ public class PlantDetailsFragment extends Fragment {
         Button tutorial = view.findViewById(R.id.tutorial);
         tutorial.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openYoutube("url");
+                openYoutube(AppData._plants.get(index).url);
             }
         });
     }
 
     private void openYoutube(String videoId) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
+        Log.d("id", videoId);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + videoId));
         intent.putExtra("VIDEO_ID", videoId);
         startActivity(intent);
     }

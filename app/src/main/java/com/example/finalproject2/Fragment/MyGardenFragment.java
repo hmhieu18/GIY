@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.finalproject2.Helper.ReminderHelper;
 import com.example.finalproject2.Model.AppData;
 import com.example.finalproject2.Adapter.GridViewAdapter;
 import com.example.finalproject2.Model.Plant;
@@ -35,6 +36,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -160,13 +162,11 @@ public class MyGardenFragment extends Fragment {
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
         try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             int n;
             while ((n = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, n);
             }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -189,9 +189,8 @@ public class MyGardenFragment extends Fragment {
 
             @Override
             public void onClick(DialogInterface dialog, int item) {
-
                 if (options[item].equals("Remove this plant")) {
-                    removePlantByID(item);
+                    getWarningDialog(item).show();
                 } else if (options[item].equals("Where to buy")) {
                     searchStore(item);
                 } else if (options[item].equals("Cancel")) {
@@ -209,8 +208,24 @@ public class MyGardenFragment extends Fragment {
     }
 
     private void removePlantByID(int item) {
+        ReminderHelper.deleteEvent(Objects.requireNonNull(getActivity()), AppData.user.userPlants.get(item).wateringSchedule.eventID);
         AppData.user.userPlants.remove(item);
-        mDatabase.child("users").child(mAuth.getUid()).child("plants_list").setValue(AppData.user.userPlants);
+        mDatabase.child("users").child(Objects.requireNonNull(mAuth.getUid())).child("plants_list").setValue(AppData.user.userPlants);
         _gridView.invalidateViews();
+    }
+
+    private AlertDialog.Builder getWarningDialog(final int item) {
+        return new AlertDialog.Builder(getContext())
+                .setTitle("Delete plant")
+                .setMessage("Are you sure to delete this plant?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        for (Plant p : AppData.user.userPlants) {
+                            removePlantByID(item);
+                        }
+                    }
+                })
+                .setNegativeButton("No", null)
+                .setIcon(android.R.drawable.ic_dialog_alert);
     }
 }

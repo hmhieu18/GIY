@@ -14,6 +14,7 @@ public class Plant {
     public int t_max;
     public Schedule wateringSchedule;
     public Calendar calendar;
+    public String url = "";
 //    public int _plantImage;
 
     public Plant(String _name, String _scientificName, String _water, String _light, String _bloomTime, int _tMin, int _tMax) {
@@ -108,6 +109,15 @@ public class Plant {
     public static class Schedule {
         public ArrayList<Integer> dayOfWeek;
         public int hour, min;
+
+        public Schedule(ArrayList<Integer> dayOfWeek, int hour, int min, long eventID) {
+            this.dayOfWeek = dayOfWeek;
+            this.hour = hour;
+            this.min = min;
+            this.eventID = eventID;
+        }
+
+        public long eventID;
 
         public Schedule(ArrayList<Integer> dayOfWeek, int hour, int min) {
             this.dayOfWeek = dayOfWeek;

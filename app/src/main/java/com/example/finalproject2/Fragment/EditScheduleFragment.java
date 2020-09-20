@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.finalproject2.Helper.ReminderHelper;
 import com.example.finalproject2.Model.AppData;
 import com.example.finalproject2.Model.Plant;
 import com.example.finalproject2.R;
@@ -166,8 +167,11 @@ public class EditScheduleFragment extends Fragment {
         if (countBoxChecked == timetowater) {
             Toast.makeText(getContext(), "Setting Notification...", Toast.LENGTH_SHORT).show();
             ArrayList<Integer> alarmDays = getDayArrayList();
-            addAlarm(hourFromPicker, minuteFromPicker, alarmDays);
+            if (index != -1)
+                ReminderHelper.deleteEvent(getActivity(), AppData.user.userPlants.get(index).wateringSchedule.eventID);
+//            addAlarm(hourFromPicker, minuteFromPicker, alarmDays);
             currentPlant.wateringSchedule = new Plant.Schedule(alarmDays, hourFromPicker, minuteFromPicker);
+            currentPlant.wateringSchedule.eventID = ReminderHelper.setReminder(getActivity(), currentPlant);
             if (index == -1)
                 AppData.user.userPlants.add(currentPlant);
             else
@@ -199,34 +203,6 @@ public class EditScheduleFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void showTimePicker() {
-        final Calendar myCalender = Calendar.getInstance();
-        int hour = myCalender.get(Calendar.HOUR_OF_DAY);
-        int minute = myCalender.get(Calendar.MINUTE);
-        TimePickerDialog.OnTimeSetListener myTimeListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-            }
-        };
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour, minute, true);
-        timePickerDialog.setTitle("Plan your schedule:");
-        timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        timePickerDialog.show();
-    }
-
-    public void setalarm(int weekno, int hour, int min) {
-//
-//        cal.set(Calendar.DAY_OF_WEEK, weekno);
-//        cal.set(Calendar.HOUR, hour);
-//        cal.set(Calendar.MINUTE, min);
-//        cal.set(Calendar.SECOND, 0);
-//        cal.set(Calendar.MILLISECOND, 0);
-//
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 1 * 60 * 60 * 1000, pendingIntent);
-    }
-
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);
@@ -238,4 +214,5 @@ public class EditScheduleFragment extends Fragment {
         System.out.println(mAuth.getUid());
         mDatabase.child("users").child(mAuth.getUid()).child("plants_list").setValue(AppData.user.userPlants);
     }
+
 }

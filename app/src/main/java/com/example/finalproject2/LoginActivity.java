@@ -1,9 +1,16 @@
 package com.example.finalproject2;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.finalproject2.Helper.ReminderHelper;
 import com.example.finalproject2.Model.AppData;
+import com.example.finalproject2.Model.Plant;
 import com.example.finalproject2.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 
 public class LoginActivity extends AppCompatActivity {
+
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private EditText email, password;
@@ -32,7 +42,25 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mRequestPermission();
         initComponent();
+    }
+
+    private void mRequestPermission() {
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {
+                Manifest.permission.READ_CALENDAR,
+                Manifest.permission.WRITE_CALENDAR,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.VIBRATE,
+                Manifest.permission.INTERNET
+        };
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
     }
 
     private void initComponent() {
@@ -84,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            getWarningDialog().show();
                         } else {
                             Toast.makeText(LoginActivity.this, "Sign In Failed",
                                     Toast.LENGTH_SHORT).show();
@@ -123,5 +152,38 @@ public class LoginActivity extends AppCompatActivity {
         AppData.user = user;
         if (isNeedToRewrite)
             mDatabase.child("users").child(userId).setValue(user);
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private AlertDialog.Builder getWarningDialog() {
+        return new AlertDialog.Builder(this)
+                .setTitle("Sync reminder")
+                .setMessage("Do you want to sync your old watering schedule?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (AppData.user.userPlants != null)
+                            for (Plant p : AppData.user.userPlants) {
+                                ReminderHelper.setReminder(LoginActivity.this, p);
+                            }
+                        onAuthSuccess(mAuth.getCurrentUser());
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        onAuthSuccess(mAuth.getCurrentUser());
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
     }
 }

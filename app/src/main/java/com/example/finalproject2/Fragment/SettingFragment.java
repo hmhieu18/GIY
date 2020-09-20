@@ -1,5 +1,6 @@
 package com.example.finalproject2.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.finalproject2.Helper.ReminderHelper;
 import com.example.finalproject2.LoginActivity;
+import com.example.finalproject2.Model.AppData;
+import com.example.finalproject2.Model.Plant;
 import com.example.finalproject2.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -90,15 +95,30 @@ public class SettingFragment extends Fragment {
         _logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                //Make sure the user cannot go back
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                getWarningDialog().show();
             }
         });
     }
 
+    private AlertDialog.Builder getWarningDialog() {
+        return new AlertDialog.Builder(getContext())
+                .setTitle("Delete reminder")
+                .setMessage("Do you want to remove all of your watering reminder?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        for (Plant p : AppData.user.userPlants) {
+                            ReminderHelper.deleteEvent(Objects.requireNonNull(getActivity()), p.wateringSchedule.eventID);
+                        }
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        //Make sure the user cannot go back
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .setIcon(android.R.drawable.ic_dialog_alert);
+    }
 }
 
