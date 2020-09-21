@@ -36,6 +36,9 @@ public class QuizFragment extends Fragment {
     private int countLightBox = 0;
     private ArrayList<CheckBox> checkBoxArrayBloom = new ArrayList<>();
     private int countBloomBox = 0;
+    private String[] _waterList = new String[] {"Low","Medium","High"};
+    private String[] _lightList = new String[] {"Full Sun", "Partial Shade", "Full Shade"};
+    private String[] _bloomList = new String[] {"Spring", "Summer", "Fall", "Winter"};
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -125,16 +128,12 @@ public class QuizFragment extends Fragment {
                 if (resultPlantArrayList.size() > 0) {
                     int upperbound = resultPlantArrayList.size();
                     int int_random = rand.nextInt(upperbound);
-                    Toast.makeText(getActivity(), resultPlantArrayList.get(int_random).getName(),
-                            Toast.LENGTH_SHORT).show();
                     openFragment(PlantDetailsFragment.newInstance(resultPlantArrayList.get(int_random), int_random, true));
                 }
                 else
                 {
                     int upperbound = AppData._plants.size();
                     int int_random = rand.nextInt(upperbound);
-                    Toast.makeText(getActivity(), AppData._plants.get(int_random).getName(),
-                            Toast.LENGTH_SHORT).show();
                     openFragment(PlantDetailsFragment.newInstance(AppData._plants.get(int_random), int_random, true));
                 }
             }
@@ -169,6 +168,13 @@ public class QuizFragment extends Fragment {
                 }
             });
         }
+
+        if (_wLow.isChecked() == false && _wHigh.isChecked() == false && _wMedium.isChecked() == false) {
+            Random rand = new Random(); //instance of random class
+            int Rand = rand.nextInt(3);
+            _water = _waterList[Rand];
+        }
+
         _wLow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -230,10 +236,18 @@ public class QuizFragment extends Fragment {
             });
         }
 
+        if(_bSpring.isChecked() == false && _bSummer.isChecked() == false
+                && _bFall.isChecked() == false && _bWinter.isChecked() == false)
+        {
+            Random rand = new Random(); //instance of random class
+            int Rand = rand.nextInt(4);
+            _bloom = _bloomList[Rand];
+        }
+
         _bSpring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if(isChecked)
                     _bloom = "Spring";
                 else _bloom = null;
             }
@@ -242,7 +256,7 @@ public class QuizFragment extends Fragment {
         _bSummer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if(isChecked)
                     _bloom = "Summer";
                 else _bloom = null;
             }
@@ -251,7 +265,7 @@ public class QuizFragment extends Fragment {
         _bFall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if(isChecked)
                     _bloom = "Fall";
                 else _bloom = null;
             }
@@ -260,7 +274,7 @@ public class QuizFragment extends Fragment {
         _bWinter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if(isChecked)
                     _bloom = "Winter";
                 else _bloom = null;
             }
@@ -297,10 +311,16 @@ public class QuizFragment extends Fragment {
             });
         }
 
+        if (_light1.isChecked() == false && _light2.isChecked() == false && _light3.isChecked() == false) {
+            Random rand = new Random(); //instance of random class
+            int Rand = rand.nextInt(3);
+            _light = _lightList[Rand];
+        }
+
         _light1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if(isChecked)
                     _light = "Full Sun";
                 else _light = null;
             }
@@ -309,7 +329,7 @@ public class QuizFragment extends Fragment {
         _light2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if(isChecked)
                     _light = "Partial Shade";
                 else _light = null;
             }
@@ -318,7 +338,7 @@ public class QuizFragment extends Fragment {
         _light3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+                if(isChecked)
                     _light = "Full Shade";
                 else _light = null;
             }
