@@ -218,21 +218,23 @@
 
 
     <Button
+        android:id="@+id/buttonNextQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
+        android:background="@drawable/ic_rectangle"
         android:text="NEXT"
-        android:id="@+id/buttonNextQuiz"
-        ></Button>
+        android:textColor="#FFFFFF"></Button>
+
     <ImageView
+        android:id="@+id/randomPlantImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_garden"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:scaleType="fitCenter"
-        android:id="@+id/randomPlantImage"
-        ></ImageView>
+        android:src="@drawable/ic_garden"
+        android:tint="@color/colorPrimary"></ImageView>
 
 </LinearLayout>

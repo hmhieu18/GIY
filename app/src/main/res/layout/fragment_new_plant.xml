@@ -21,7 +21,8 @@
         android:layout_height="29dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/ic_rectangle"
-        android:text="Quiz" />
+        android:text="Quiz"
+        android:textColor="#FFFFFF" />
 
     <ImageView
         android:id="@+id/plantphoto_in_add"
@@ -85,12 +86,35 @@
             android:hint="Bob" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ic_rectangle"
-        android:text="Add this plant" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_rectangle"
+            android:text="Add this plant"
+            android:textColor="#FFFFFF" />
+        <Button
+            android:id="@+id/shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_rectangle"
+            android:gravity="center"
+            android:text="Shop"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
 </LinearLayout>

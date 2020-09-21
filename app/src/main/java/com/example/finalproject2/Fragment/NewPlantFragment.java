@@ -1,6 +1,7 @@
 package com.example.finalproject2.Fragment;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class NewPlantFragment extends Fragment {
     private Button _quizButton;
     private Spinner spinner;
     private ImageView imageView;
-    private Button addPlantBtn;
+    private Button addPlantBtn, shopBtn;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -96,23 +97,12 @@ public class NewPlantFragment extends Fragment {
                 openFragment(EditScheduleFragment.newInstance(pickedPlant.getName(), -1));
             }
         });
-    }
-
-    public void showTimePicker() {
-        final Calendar myCalender = Calendar.getInstance();
-        int hour = myCalender.get(Calendar.HOUR_OF_DAY);
-        int minute = myCalender.get(Calendar.MINUTE);
-        TimePickerDialog.OnTimeSetListener myTimeListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+        shopBtn=view.findViewById(R.id.shop);
+        shopBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                searchStore();
             }
-        };
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                android.R.style.Theme_Holo_Light_Dialog_NoActionBar, myTimeListener, hour, minute, true);
-        timePickerDialog.setTitle("Plan your schedule:");
-        timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        timePickerDialog.show();
+        });
     }
 
     private void loadData() {
@@ -157,5 +147,9 @@ public class NewPlantFragment extends Fragment {
                 openFragment(SubQuizFragment.newInstance("",""));
             }
         });
+    }
+    private void searchStore() {
+        Intent myIntent = new Intent(getActivity(), SearchFragment.class);
+        Objects.requireNonNull(getActivity()).startActivity(myIntent);
     }
 }

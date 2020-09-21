@@ -59,6 +59,13 @@ public class MyGardenFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Context mContext;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     public MyGardenFragment() {
         // Required empty public constructor
@@ -101,7 +108,7 @@ public class MyGardenFragment extends Fragment {
     }
 
     private void refreshGridView() {
-        _adapter = new GridViewAdapter(Objects.requireNonNull(getContext()), R.layout.gridview_plant_item, AppData.user.userPlants);
+        _adapter = new GridViewAdapter(mContext, R.layout.gridview_plant_item, AppData.user.userPlants);
         _gridView.setAdapter(_adapter);
         _gridView.setOnItemClickListener(_gridViewItemOnClick);
         _gridView.setOnItemLongClickListener(_gridViewItemOnLongClick);
@@ -152,7 +159,7 @@ public class MyGardenFragment extends Fragment {
     private GridView.OnItemLongClickListener _gridViewItemOnLongClick = new GridView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-            optionPlace(getContext(), i);
+            optionPlace(mContext, i);
             return true;
         }
     };
@@ -215,12 +222,12 @@ public class MyGardenFragment extends Fragment {
     }
 
     private AlertDialog.Builder getWarningDialog(final int item) {
-        return new AlertDialog.Builder(getContext())
+        return new AlertDialog.Builder(mContext)
                 .setTitle("Delete plant")
                 .setMessage("Are you sure to delete this plant?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                            removePlantByID(item);
+                        removePlantByID(item);
                     }
                 })
                 .setNegativeButton("No", null)

@@ -22,7 +22,8 @@
         android:layout_margin="10dp"
         android:width="30dp"
         android:background="@drawable/ic_rectangle"
-        android:text="Choose Image" />
+        android:text="Choose Image"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/upload"
@@ -31,7 +32,8 @@
         android:layout_margin="10dp"
         android:width="30dp"
         android:background="@drawable/ic_rectangle"
-        android:text="Make Prediction" />
+        android:text="Make Prediction"
+        android:textColor="#FFFFFF" />
 
     <ListView
         android:id="@+id/predictionresults"

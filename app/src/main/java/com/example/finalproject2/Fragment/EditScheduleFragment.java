@@ -97,6 +97,23 @@ public class EditScheduleFragment extends Fragment {
         checkBoxArrayList.add(temp);
         temp = view.findViewById(R.id.sat);
         checkBoxArrayList.add(temp);
+        setClickListenerForButtonsArrayList();
+        timePicker = view.findViewById(R.id.edit_alarm_time_picker);
+        if (index != -1) {
+            loadOldSchedule();
+        }
+        repeatTextView = view.findViewById(R.id.repeat);
+        finish = view.findViewById(R.id.finish);
+        for (Plant i : AppData._plants) {
+            if (i.name.equals(currentPlant.getName())) {
+                currentPlant = i;
+                waterConditionHandling();
+                break;
+            }
+        }
+    }
+
+    private void setClickListenerForButtonsArrayList() {
         for (CheckBox cb : checkBoxArrayList) {
             cb.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -116,19 +133,6 @@ public class EditScheduleFragment extends Fragment {
                         }
                 }
             });
-        }
-        timePicker = view.findViewById(R.id.edit_alarm_time_picker);
-        if (index != -1) {
-            loadOldSchedule();
-        }
-        repeatTextView = view.findViewById(R.id.repeat);
-        finish = view.findViewById(R.id.finish);
-        for (Plant i : AppData._plants) {
-            if (i.name.equals(currentPlant.getName())) {
-                currentPlant = i;
-                waterConditionHandling();
-                break;
-            }
         }
     }
 
@@ -186,21 +190,10 @@ public class EditScheduleFragment extends Fragment {
 
     private ArrayList<Integer> getDayArrayList() {
         ArrayList<Integer> alarmDays = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             if (checkBoxArrayList.get(i).isChecked()) alarmDays.add(i + 1);
         }
         return alarmDays;
-    }
-
-    private void addAlarm(int hourFromPicker, int minuteFromPicker, ArrayList<Integer> alarmDays) {
-        Intent intent = new Intent(AlarmClock.ACTION_SET_ALARM)
-                .putExtra(AlarmClock.EXTRA_DAYS, alarmDays)
-                .putExtra(AlarmClock.EXTRA_MESSAGE, "Your " + currentPlant.getName() + " gonna be drained. It's time to water it")
-                .putExtra(AlarmClock.EXTRA_HOUR, hourFromPicker)
-                .putExtra(AlarmClock.EXTRA_MINUTES, minuteFromPicker);
-
-        intent.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-        startActivity(intent);
     }
 
     public void openFragment(Fragment fragment) {
@@ -214,5 +207,4 @@ public class EditScheduleFragment extends Fragment {
         System.out.println(mAuth.getUid());
         mDatabase.child("users").child(mAuth.getUid()).child("plants_list").setValue(AppData.user.userPlants);
     }
-
 }

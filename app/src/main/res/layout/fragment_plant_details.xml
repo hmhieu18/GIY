@@ -382,36 +382,39 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:layout_weight="1"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/ic_rectangle"
             android:text="Schedule"
+            android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/shop"
-            android:layout_weight="1"
-
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/ic_rectangle"
             android:text="Shop"
+            android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/tutorial"
-            android:layout_weight="1"
-
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/ic_rectangle"
             android:text="Tutorial"
+            android:textColor="#FFFFFF"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -35,7 +35,8 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/ic_rectangle"
         android:gravity="center"
-        android:text="Login" />
+        android:text="Login"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/signup"
@@ -44,5 +45,6 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/ic_rectangle"
         android:gravity="center"
-        android:text="SignUp" />
+        android:text="SignUp"
+        android:textColor="#FFFFFF" />
 </LinearLayout>

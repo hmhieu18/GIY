@@ -15,12 +15,15 @@
       android:layout_marginRight="20dp"
       android:layout_marginLeft="20dp"
       >
+
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTintMode="multiply"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_garden"
-        ></ImageView>
+        android:tint="@color/colorPrimary"></ImageView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,11 +35,15 @@
   </LinearLayout>
 
   <Button
-      android:layout_width="match_parent"
+      android:id="@+id/buttonLogOut"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_gravity="center"
       android:layout_marginLeft="20dp"
       android:layout_marginRight="20dp"
-      android:id="@+id/buttonLogOut"
-      android:text="LOG OUT"></Button>
+      android:background="@drawable/ic_rectangle"
+      android:gravity="center"
+      android:text="LOG OUT"
+      android:textColor="#FFFFFF"></Button>
 
 </LinearLayout>

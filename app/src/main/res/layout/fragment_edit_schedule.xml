@@ -115,9 +115,18 @@
                     android:id="@+id/finish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/ic_rectangle"
                     android:gravity="center"
-                    android:text="Finish" />
+                    android:text="Finish"
+                    android:textColor="#FFFFFF" />
+
+
             </LinearLayout>
 
         </LinearLayout>
