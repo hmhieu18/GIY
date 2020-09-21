@@ -197,9 +197,9 @@ public class MyGardenFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Remove this plant")) {
-                    getWarningDialog(item).show();
+                    getWarningDialog(i).show();
                 } else if (options[item].equals("Where to buy")) {
-                    searchStore(item);
+                    searchStore();
                 } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
@@ -208,9 +208,8 @@ public class MyGardenFragment extends Fragment {
         builder.show();
     }
 
-    private void searchStore(int item) {
+    private void searchStore() {
         Intent myIntent = new Intent(getActivity(), SearchFragment.class);
-        myIntent.putExtra("query", "Where to buy " + AppData.user.userPlants.get(item).getName());
         Objects.requireNonNull(getActivity()).startActivity(myIntent);
     }
 
