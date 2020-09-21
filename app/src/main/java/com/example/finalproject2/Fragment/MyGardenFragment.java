@@ -146,7 +146,7 @@ public class MyGardenFragment extends Fragment {
     private GridView.OnItemClickListener _gridViewItemOnClick = new GridView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            openFragment(PlantDetailsFragment.newInstance(AppData.user.userPlants.get(position), position));
+            openFragment(PlantDetailsFragment.newInstance(AppData.user.userPlants.get(position), position, false));
         }
     };
     private GridView.OnItemLongClickListener _gridViewItemOnLongClick = new GridView.OnItemLongClickListener() {
@@ -220,9 +220,7 @@ public class MyGardenFragment extends Fragment {
                 .setMessage("Are you sure to delete this plant?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        for (Plant p : AppData.user.userPlants) {
                             removePlantByID(item);
-                        }
                     }
                 })
                 .setNegativeButton("No", null)

@@ -35,6 +35,7 @@ public class NewPlantFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Button _quizButton;
     private Spinner spinner;
     private ImageView imageView;
     private Button addPlantBtn;
@@ -85,6 +86,8 @@ public class NewPlantFragment extends Fragment {
     }
 
     private void initComponent(View view) {
+        _quizButton=view.findViewById(R.id.buttonQuiz);
+        quizButtonOnclickedListener();
         spinner = view.findViewById(R.id.namelist);
         imageView = view.findViewById(R.id.plantphoto_in_add);
         addPlantBtn = view.findViewById(R.id.add);
@@ -145,5 +148,14 @@ public class NewPlantFragment extends Fragment {
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+    private void quizButtonOnclickedListener()
+    {
+        _quizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFragment(SubQuizFragment.newInstance("",""));
+            }
+        });
     }
 }

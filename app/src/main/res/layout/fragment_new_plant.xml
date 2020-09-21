@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/question" />
+
+    <Button
+        android:id="@+id/buttonQuiz"
+        android:layout_width="81dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ic_rectangle"
+        android:text="Quiz" />
 
     <ImageView
         android:id="@+id/plantphoto_in_add"
@@ -14,10 +30,13 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         tools:srcCompat="@tools:sample/avatars" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -27,13 +46,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Name: "
+            android:text="Plant name: "
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/namelist"
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:background="@android:drawable/btn_dropdown"
             android:dropDownWidth="match_parent"
@@ -44,7 +63,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal">
@@ -59,17 +80,17 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="Bob" />
     </LinearLayout>
 
     <Button
         android:id="@+id/add"
-        android:background="@drawable/ic_rectangle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/ic_rectangle"
         android:text="Add this plant" />
 
 </LinearLayout>

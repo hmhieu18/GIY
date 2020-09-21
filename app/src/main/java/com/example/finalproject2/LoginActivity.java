@@ -171,17 +171,19 @@ public class LoginActivity extends AppCompatActivity {
                 .setMessage("Do you want to sync your old watering schedule?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        if (AppData.user.userPlants != null)
+                        if (AppData.user != null)
                             for (Plant p : AppData.user.userPlants) {
                                 ReminderHelper.setReminder(LoginActivity.this, p);
                             }
-                        onAuthSuccess(mAuth.getCurrentUser());
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        onAuthSuccess(mAuth.getCurrentUser());
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert);

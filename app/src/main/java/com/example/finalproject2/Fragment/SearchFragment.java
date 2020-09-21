@@ -59,16 +59,6 @@ public class SearchFragment extends FragmentActivity implements OnMapReadyCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                query = null;
-            } else query = extras.getString("query");
-        } else {
-            query = (String) savedInstanceState.getSerializable("query");
-        }
-        assert query != null;
-        Log.d("query", query);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

@@ -28,7 +28,7 @@ import java.util.Random;
 public class QuizFragment extends Fragment {
     private Button _finishButton;
     private String _water, _light, _bloom;
-    private ArrayList<Plant> meow = new ArrayList<>();
+    private ArrayList<Plant> resultPlantArrayList = new ArrayList<>();
     private ArrayList<Plant> arrayList = new ArrayList<>();
     private ArrayList<CheckBox> checkBoxArrayWater = new ArrayList<>();
     private int countWaterBox = 0;
@@ -106,29 +106,37 @@ public class QuizFragment extends Fragment {
         _finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                meow.clear();
+                resultPlantArrayList.clear();
                 Plant temp;
                 for (int i = 0; i < arrayList.size(); i++) {
-                    if(_water != null && _light!=null &&_bloom!=null) {
+                    if (_water != null && _light != null && _bloom != null) {
                         if (arrayList.get(i).getWater().equals(_water)
                                 && arrayList.get(i).getBloom_time().contains(_bloom)
                                 && arrayList.get(i).getLight().contains(_light)) {
                             temp = arrayList.get(i);
-                            meow.add(temp);
+                            resultPlantArrayList.add(temp);
                         }
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getActivity(), "Please check the checkbox",
                                 Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 Random rand = new Random(); //instance of random class
-                int upperbound = meow.size();
-                int int_random = rand.nextInt(upperbound);
-                Toast.makeText(getActivity(), meow.get(int_random).getName(),
-                        Toast.LENGTH_SHORT).show();
-                openFragment(PlantDetailsFragment.newInstance(meow.get(int_random), int_random));
+                if (resultPlantArrayList.size() > 0) {
+                    int upperbound = resultPlantArrayList.size();
+                    int int_random = rand.nextInt(upperbound);
+                    Toast.makeText(getActivity(), resultPlantArrayList.get(int_random).getName(),
+                            Toast.LENGTH_SHORT).show();
+                    openFragment(PlantDetailsFragment.newInstance(resultPlantArrayList.get(int_random), int_random, true));
+                }
+                else
+                {
+                    int upperbound = AppData._plants.size();
+                    int int_random = rand.nextInt(upperbound);
+                    Toast.makeText(getActivity(), AppData._plants.get(int_random).getName(),
+                            Toast.LENGTH_SHORT).show();
+                    openFragment(PlantDetailsFragment.newInstance(AppData._plants.get(int_random), int_random, true));
+                }
             }
         });
     }
@@ -164,7 +172,7 @@ public class QuizFragment extends Fragment {
         _wLow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _water = "Low";
                 else _water = null;
             }
@@ -173,7 +181,7 @@ public class QuizFragment extends Fragment {
         _wMedium.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _water = "Medium";
                 else _water = null;
             }
@@ -182,7 +190,7 @@ public class QuizFragment extends Fragment {
         _wHigh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _water = "High";
                 else _water = null;
             }
@@ -225,7 +233,7 @@ public class QuizFragment extends Fragment {
         _bSpring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _bloom = "Spring";
                 else _bloom = null;
             }
@@ -234,7 +242,7 @@ public class QuizFragment extends Fragment {
         _bSummer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _bloom = "Summer";
                 else _bloom = null;
             }
@@ -243,7 +251,7 @@ public class QuizFragment extends Fragment {
         _bFall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _bloom = "Fall";
                 else _bloom = null;
             }
@@ -252,7 +260,7 @@ public class QuizFragment extends Fragment {
         _bWinter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _bloom = "Winter";
                 else _bloom = null;
             }
@@ -292,7 +300,7 @@ public class QuizFragment extends Fragment {
         _light1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _light = "Full Sun";
                 else _light = null;
             }
@@ -301,7 +309,7 @@ public class QuizFragment extends Fragment {
         _light2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _light = "Partial Shade";
                 else _light = null;
             }
@@ -310,7 +318,7 @@ public class QuizFragment extends Fragment {
         _light3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                if (isChecked)
                     _light = "Full Shade";
                 else _light = null;
             }

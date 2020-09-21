@@ -46,6 +46,7 @@ public class PlantDetailsFragment extends Fragment {
     private ImageView _lightIcon3;
     private Button _modify;
     private int index;
+    private Boolean isQuizResult = false;
 
     public PlantDetailsFragment() {
         // Required empty public constructor
@@ -58,7 +59,7 @@ public class PlantDetailsFragment extends Fragment {
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlantDetailsFragment newInstance(Plant plant, int _index) {
+    public static PlantDetailsFragment newInstance(Plant plant, int _index, Boolean quiz) {
         PlantDetailsFragment fragment = new PlantDetailsFragment();
         Bundle args = new Bundle();
         args.putString("Name", plant.getName());
@@ -69,6 +70,7 @@ public class PlantDetailsFragment extends Fragment {
         args.putInt("TMin", plant.getT_min());
         args.putInt("TMax", plant.getT_max());
         args.putInt("index", _index);
+        args.putBoolean("quiz", quiz);
         args.putInt("LogoID", plant.getId(plant.getName().replaceAll(" ", "").toLowerCase(), R.drawable.class));
         fragment.setArguments(args);
         return fragment;
@@ -81,6 +83,7 @@ public class PlantDetailsFragment extends Fragment {
             plant = new Plant(getArguments().getString("Name"), getArguments().getString("ScientificName"), getArguments().getString("Water"),
                     getArguments().getString("Light"), getArguments().getString("BloomTime"), getArguments().getInt("TMin"), getArguments().getInt("TMax"));
             index = getArguments().getInt("index");
+            isQuizResult = getArguments().getBoolean("quiz");
         }
     }
 
@@ -163,6 +166,7 @@ public class PlantDetailsFragment extends Fragment {
 
             ;
         });
+        if (isQuizResult) _modify.setVisibility(View.GONE);
         Button shop = view.findViewById(R.id.shop);
         shop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -172,7 +176,10 @@ public class PlantDetailsFragment extends Fragment {
         Button tutorial = view.findViewById(R.id.tutorial);
         tutorial.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openYoutube(AppData._plants.get(index).url);
+                if (!isQuizResult)
+                    openYoutube(AppData.user.userPlants.get(index).url);
+                else
+                    openYoutube(AppData._plants.get(index).url);
             }
         });
     }
@@ -193,7 +200,7 @@ public class PlantDetailsFragment extends Fragment {
 
     private void searchStore(int item) {
         Intent myIntent = new Intent(getActivity(), SearchFragment.class);
-        myIntent.putExtra("query", "Where to buy " + AppData.user.userPlants.get(item).getName());
+//        myIntent.putExtra("query", "Where to buy " + AppData.user.userPlants.get(item).getName());
         Objects.requireNonNull(getActivity()).startActivity(myIntent);
     }
 }

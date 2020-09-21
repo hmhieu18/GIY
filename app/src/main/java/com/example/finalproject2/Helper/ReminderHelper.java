@@ -110,4 +110,15 @@ public class ReminderHelper {
         int rows = cr.delete(deleteUri, null, null);
         Log.i("Calendar", "Rows deleted: " + rows);
     }
+
+    private Uri getCalendarURI(boolean eventUri) {
+        Uri calendarURI = null;
+
+        if (android.os.Build.VERSION.SDK_INT <= 7) {
+            calendarURI = (eventUri) ? Uri.parse("content://calendar/events") : Uri.parse("content://calendar/calendars");
+        } else {
+            calendarURI = (eventUri) ? Uri.parse("content://com.android.calendar/events") : Uri.parse("content://com.android.calendar/calendars");
+        }
+        return calendarURI;
+    }
 }

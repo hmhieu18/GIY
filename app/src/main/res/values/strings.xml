@@ -12,5 +12,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_maps">Map</string>
+    <string name="question">Have no idea what to grow yet? Take a quiz to figure it out</string>
 
 </resources>
