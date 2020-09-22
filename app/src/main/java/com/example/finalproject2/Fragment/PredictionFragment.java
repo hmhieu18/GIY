@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.finalproject2.Adapter.PredictionArrayAdapter;
+import com.example.finalproject2.ClassifierActivity;
 import com.example.finalproject2.Model.ImageJson;
 import com.example.finalproject2.Model.PredictingResult;
 import com.example.finalproject2.R;
@@ -51,7 +52,7 @@ public class PredictionFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final int RESULT_OK = -1;
     private Uri filePath;
-    private Button btnChoose, btnUpload;
+    private Button btnChoose, realtimeBtn, btnUpload;
     private ImageView imageView;
     private final int PICK_IMAGE_REQUEST = 71;
     private Bitmap bitmap;
@@ -147,7 +148,13 @@ public class PredictionFragment extends Fragment {
         btnUpload = (Button)
 
                 view.findViewById(R.id.upload);
-
+        realtimeBtn = view.findViewById(R.id.realtime);
+        realtimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ClassifierActivity.class));
+            }
+        });
         imageView = (ImageView)
 
                 view.findViewById(R.id.imageView);
